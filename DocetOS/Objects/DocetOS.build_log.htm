@@ -1,0 +1,127 @@
+<html>
+<body>
+<pre>
+<h1>µVision Build Log</h1>
+<h2>Tool Versions:</h2>
+IDE-Version: µVision V5.35.0.0
+Copyright (C) 2021 ARM Ltd and ARM Germany GmbH. All rights reserved.
+License Information: Support The Flex license: MDK Professional 5.35 (Flex) (mdk_pro) Operation stops: 20 Jan 2025
+ 
+Tool Versions:
+Toolchain:       MDK Professional 5.35 (Flex)  Version: 5.35.0.2
+Toolchain Path:  c:\Keil_v5\ARM\ARMCLANG\Bin
+C Compiler:      ArmClang.exe V6.16
+Assembler:       Armasm.exe V6.16
+Linker/Locator:  ArmLink.exe V6.16
+Library Manager: ArmAr.exe V6.16
+Hex Converter:   FromElf.exe V6.16
+CPU DLL:         SARMCM3.DLL V5.35.0.2
+Dialog DLL:      DCM.DLL V1.17.3.0
+Target DLL:      STLink\ST-LINKIII-KEIL_SWO.dll V3.0.9.0
+Dialog DLL:      TCM.DLL V1.53.0.0
+ 
+<h2>Project:</h2>
+\\userfs\cs2101\w2k\Desktop\DocetOS_ORIGINAL\DocetOS.uvprojx
+Project File Date:  11/27/2023
+
+<h2>Output:</h2>
+*** Using Compiler 'V6.16', folder: 'c:\Keil_v5\ARM\ARMCLANG\Bin'
+Rebuild target 'STM32F407 Flash'
+assembling os_asm.s...
+assembling startup_stm32f407xx.s...
+compiling hardfault.c...
+src/main.c(5): warning: unused parameter 'args' [-Wunused-parameter]
+static void task1(void const *const args) {
+                                    ^
+src/main.c(11): warning: unused parameter 'args' [-Wunused-parameter]
+static void task2(void const *const args) {
+                                    ^
+src/main.c(11): warning: function 'task2' could be declared with attribute 'noreturn' [-Wmissing-noreturn]
+static void task2(void const *const args) {
+                                          ^
+src/main.c(28): warning: unused variable 'stack1' [-Wunused-variable]
+        static uint32_t stack1[128] __attribute__ (( aligned(8) ));
+                        ^
+src/main.c(29): warning: unused variable 'stack2' [-Wunused-variable]
+        static uint32_t stack2[128] __attribute__ (( aligned(8) ));
+                        ^
+src/main.c(30): warning: unused variable 'TCB1' [-Wunused-variable]
+        static OS_TCB_t TCB1, TCB2;
+                        ^
+src/main.c(30): warning: unused variable 'TCB2' [-Wunused-variable]
+        static OS_TCB_t TCB1, TCB2;
+                              ^
+src/main.c(5): warning: unused function 'task1' [-Wunused-function]
+static void task1(void const *const args) {
+            ^
+src/main.c(11): warning: unused function 'task2' [-Wunused-function]
+static void task2(void const *const args) {
+            ^
+9 warnings generated.
+compiling main.c...
+compiling retarget_io.c...
+compiling utils.c...
+compiling system_stm32f4xx.c...
+src/OS/scheduler.c(38): warning: unused parameter 'list' [-Wunused-parameter]
+static void list_remove(_OS_tasklist_t *list, OS_TCB_t *task) {
+                                        ^
+src/OS/scheduler.c(38): warning: unused parameter 'task' [-Wunused-parameter]
+static void list_remove(_OS_tasklist_t *list, OS_TCB_t *task) {
+                                                        ^
+2 warnings generated.
+compiling scheduler.c...
+compiling os.c...
+linking...
+Program Size: Code=11360 RO-data=1056 RW-data=128 ZI-data=1960  
+".\Objects\DocetOS.axf" - 0 Error(s), 11 Warning(s).
+
+<h2>Software Packages used:</h2>
+
+Package Vendor: ARM
+                http://www.keil.com/pack/ARM.CMSIS.5.8.0.pack
+                ARM.CMSIS.5.8.0
+                CMSIS (Common Microcontroller Software Interface Standard)
+   * Component: CORE Version: 5.5.0
+
+Package Vendor: Keil
+                http://www.keil.com/pack/Keil.ARM_Compiler.1.6.3.pack
+                Keil.ARM_Compiler.1.6.3
+                Keil ARM Compiler extensions for ARM Compiler 5 and ARM Compiler 6
+   * Component: STDOUT Variant: User Version: 1.2.0
+   * Component: TTY Variant: User Version: 1.2.0
+
+Package Vendor: Keil
+                http://www.keil.com/pack/Keil.STM32F4xx_DFP.2.15.0.pack
+                Keil.STM32F4xx_DFP.2.15.0
+                STMicroelectronics STM32F4 Series Device Support, Drivers and Examples
+   * Component: Startup Version: 2.6.3
+
+<h2>Collection of Component include folders:</h2>
+  .\RTE\_STM32F407_Flash
+  C:\KEIL_V5\ARM\PACK\ARM\CMSIS\5.8.0\CMSIS\Core\Include
+  C:\KEIL_V5\ARM\PACK\Keil\STM32F4xx_DFP\2.15.0\Drivers\CMSIS\Device\ST\STM32F4xx\Include
+
+<h2>Collection of Component Files used:</h2>
+
+   * Component: ARM::CMSIS:CORE:5.5.0
+
+   * Component: Keil.ARM Compiler::Compiler:I/O:STDOUT:User:1.2.0
+      Source file:   Template\stdout_USART.c
+      Source file:   Template\stdout_display.c
+      Source file:   Template\stdout_user.c
+      Source file:   Source\retarget_io.c
+
+   * Component: Keil.ARM Compiler::Compiler:I/O:TTY:User:1.2.0
+      Source file:   Source\retarget_io.c
+      Source file:   Template\tty_user.c
+
+   * Component: Keil::Device:Startup:2.6.3
+      Include file:  Drivers\CMSIS\Device\ST\STM32F4xx\Include\stm32f4xx.h
+      Source file:   Drivers\CMSIS\Device\ST\STM32F4xx\Source\Templates\arm\startup_stm32f407xx.s
+      Source file:   MDK\Device\Source\ARM\STM32F40xxx_41xxx_OPT.s
+      Source file:   MDK\Device\Source\ARM\STM32F4xx_OTP.s
+      Source file:   Drivers\CMSIS\Device\ST\STM32F4xx\Source\Templates\system_stm32f4xx.c
+Build Time Elapsed:  00:00:01
+</pre>
+</body>
+</html>
