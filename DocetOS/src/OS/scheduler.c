@@ -36,7 +36,21 @@ static void list_add(_OS_tasklist_t *list, OS_TCB_t *task) {
 }
 
 static void list_remove(_OS_tasklist_t *list, OS_TCB_t *task) {
-	/* Not implemented yet */
+	// If task to be removed is the list head
+	if (list->head == task) {
+		// If task is last item in list
+		if (task->next == task) {
+			list->head = 0;
+			return;
+		}
+		
+		// Increment head
+		list->head = task->next;
+	}
+	
+	// Update TCB
+	task->prev->next = task->next;
+	task->next->prev = task->prev;
 }
 
 /* Round-robin scheduler */

@@ -3,12 +3,15 @@
 #include <stdio.h>
 
 static void task1(void const *const args) {
+	(void) args; // Suppress unused variable warning
 	for (uint_fast16_t i = 0; i < 1000; ++i) {
 		printf("AAAAAAAA");
 	}
 }
 
+__attribute__ (( noreturn ))
 static void task2(void const *const args) {
+	(void) args; // Suppress unused variable warning
 	while (1) {
 		printf("BBBBBBBB");
 	}
@@ -30,9 +33,13 @@ int main(void) {
 	static OS_TCB_t TCB1, TCB2;
 
 	/* Initialise the TCBs using the two functions above */
+	OS_initialiseTCB(&TCB1, stack1 + 128, task1, NULL);
+	OS_initialiseTCB(&TCB2, stack2 + 128, task2, NULL);
 	
 	/* Add the tasks to the scheduler */
+	OS_addTask(&TCB1);
+	OS_addTask(&TCB2);
 
 	/* Start the OS */
-	
+	OS_start();	
 }

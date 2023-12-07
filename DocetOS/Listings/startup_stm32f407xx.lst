@@ -849,11 +849,12 @@ Command Line: --debug --xref --diag_suppress=9931 --cpu=Cortex-M4 --fpu=SoftVFP
 ARM Macro Assembler    Page 14 
 
 
-\RTE\_STM32F407_Flash -IC:\KEIL_V5\ARM\PACK\ARM\CMSIS\5.8.0\CMSIS\Core\Include 
--IC:\KEIL_V5\ARM\PACK\Keil\STM32F4xx_DFP\2.15.0\Drivers\CMSIS\Device\ST\STM32F4
-xx\Include --predefine="__UVISION_VERSION SETA 535" --predefine="_RTE_ SETA 1" 
---predefine="STM32F407xx SETA 1" --predefine="_RTE_ SETA 1" --list=.\listings\s
-tartup_stm32f407xx.lst RTE\Device\STM32F407VGTx\startup_stm32f407xx.s
+\RTE\_STM32F407_Flash -IC:\Users\Connall\AppData\Local\Arm\Packs\ARM\CMSIS\5.8.
+0\CMSIS\Core\Include -IC:\Users\Connall\AppData\Local\Arm\Packs\Keil\STM32F4xx_
+DFP\2.16.0\Drivers\CMSIS\Device\ST\STM32F4xx\Include --predefine="__EVAL SETA 1
+" --predefine="__UVISION_VERSION SETA 536" --predefine="_RTE_ SETA 1" --predefi
+ne="STM32F407xx SETA 1" --predefine="_RTE_ SETA 1" --list=.\listings\startup_st
+m32f407xx.lst RTE\Device\STM32F407VGTx\startup_stm32f407xx.s
 
 
 
@@ -1957,4 +1958,4 @@ Symbol: __use_two_region_memory
       None
 Comment: __use_two_region_memory unused
 3 symbols
-447 symbols in table
+448 symbols in table
