@@ -303,8 +303,8 @@
       <tvExp>0</tvExp>
       <tvExpOptDlg>0</tvExpOptDlg>
       <bDave2>0</bDave2>
-      <PathWithFileName>.\src\OS\wait_list.c</PathWithFileName>
-      <FilenameWithoutPath>wait_list.c</FilenameWithoutPath>
+      <PathWithFileName>.\src\OS\Services\min_heap.c</PathWithFileName>
+      <FilenameWithoutPath>min_heap.c</FilenameWithoutPath>
       <RteFlg>0</RteFlg>
       <bShared>0</bShared>
     </File>
