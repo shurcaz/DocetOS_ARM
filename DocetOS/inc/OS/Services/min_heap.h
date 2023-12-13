@@ -7,18 +7,19 @@
 /*      EXTERNAL API      */
 /*========================*/
 
-// Generic min-heap data structure
+/* Generic min-heap data structure */
 typedef struct {
-	// Pointer to a pointer to a memory location storing data
+	/* Pointer to a pointer to a memory location storing data */
 	void * * const store;
 	
-	// Pointer to a function used to compare data in the heap
+	/* Pointer to a function used to compare data in the heap */
 	int_fast8_t (*comparator) (void *, void *);
 	
 	uint32_t size;
 } heap_t;
 
 #define HEAP_INITIALISER(store, comparator) { .store = (store), .size = 0, .comparator = (comparator) }
+
 
 void heap_insert(heap_t *heap, void *value);
 

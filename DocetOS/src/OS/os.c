@@ -36,7 +36,7 @@ uint32_t OS_elapsedTicks(void) {
 }
 
 /* IRQ handler for the system tick.  Schedules PendSV */
-// Local prototype - overrides weak export but is not part of the API
+/* Local prototype - overrides weak export but is not part of the API */
 void SysTick_Handler(void) {
 	_ticks = _ticks + 1;
 	SCB->ICSR = SCB_ICSR_PENDSVSET_Msk;
@@ -55,7 +55,7 @@ void _OS_schedule_delegate(void) {
 
 /* Starts the OS and never returns. */
 void OS_start(void) {
-	// This call never returns (and enables interrupts and resets the stack)
+	/* This call never returns (and enables interrupts and resets the stack) */
 	_task_init_switch(&_OS_idleTCB);
 }
 

@@ -36,19 +36,19 @@ static void list_add(_OS_tasklist_t *list, OS_TCB_t *task) {
 }
 
 static void list_remove(_OS_tasklist_t *list, OS_TCB_t *task) {
-	// If task to be removed is the list head
+	/* If task to be removed is the list head */
 	if (list->head == task) {
-		// If task is last item in list
+		/* If task is last item in list */
 		if (task->next == task) {
 			list->head = 0;
 			return;
 		}
 		
-		// Increment head
+		/* Increment head */
 		list->head = task->next;
 	}
 	
-	// Update TCB
+	/* Update TCB */
 	task->prev->next = task->next;
 	task->next->prev = task->prev;
 }
@@ -60,7 +60,7 @@ OS_TCB_t const * _OS_schedule(void) {
 		task_list.head->state &= ~TASK_STATE_YIELD;
 		return task_list.head;
 	}
-	// No tasks are runnable, so return the idle task
+	/* No tasks are runnable, so return the idle task */
 	return _OS_idleTCB_p;
 }
 
@@ -101,7 +101,7 @@ void OS_addTask(OS_TCB_t * const tcb) {
 /* SVC handler that's called by _OS_task_end when a task finishes.  Removes the
    task from the scheduler and then queues PendSV to reschedule. */
 void _OS_taskExit_delegate(void) {
-	// Remove the given TCB from the list of tasks so it won't be run again
+	/* Remove the given TCB from the list of tasks so it won't be run again */
 	OS_TCB_t * tcb = OS_currentTCB();
 	list_remove(&task_list, tcb);
 	SCB->ICSR = SCB_ICSR_PENDSVSET_Msk;
