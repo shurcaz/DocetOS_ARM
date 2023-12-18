@@ -41,5 +41,5 @@ int main(void) {
 	OS_addTask(&TCB2);
 
 	/* Start the OS */
-	OS_start();	
+	OS_start();
 }
