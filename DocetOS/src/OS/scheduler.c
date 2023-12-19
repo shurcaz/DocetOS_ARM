@@ -35,6 +35,33 @@ static _OS_FPSheduler_t _OS_FPSheduler = { .scheduler = &priority_heap,
 																					 .priority_list = {0}, 
 																					 .pending_list_head = 0 };
 
+
+// Single-linked list operations
+static void push_pending(OS_TCB_t * task) {
+	do {
+		OS_TCB_t * head = (OS_TCB_t *) __LDREXW ((volatile uint32_t *) &(_OS_FPSheduler.pending_list_head));
+		task->pending_next = head;
+	} while (__STREXW ((uint32_t) task, (volatile uint32_t *) &(_OS_FPSheduler.pending_list_head)));	
+}
+
+static OS_TCB_t * pop_pending() {
+	OS_TCB_t * removed_task;
+	do {
+		// Load head
+		removed_task = (OS_TCB_t *) __LDREXW ((volatile uint32_t *) &(_OS_FPSheduler.pending_list_head));
+		
+		// If no head (not sure if this check is necessary)
+		if (!removed_task) {
+			__CLREX();
+			return 0;
+		}
+		
+		// increment head
+	} while (__STREXW ((uint32_t) removed_task->pending_next, (volatile uint32_t *) &(_OS_FPSheduler.pending_list_head)));
+	
+	return removed_task;
+}																		 
+
 /* 
  * Add task to priority level round robin 
  * argument queue_head_ptr is a pointer to the head pointer in the priority list array
@@ -86,8 +113,63 @@ static void list_remove(OS_TCB_t * * queue_head_ptr, OS_TCB_t * task) {
 	task->next->prev = task->prev;
 }
 
+static void modify_priority(OS_TCB_t * tcb) {
+	/* remove task from current priority list */
+	OS_TCB_t * * priority_level_head = &(_OS_FPSheduler.priority_list[tcb->current_priority]);
+	list_remove(priority_level_head, tcb);
+	
+	/* add task to new priority list */
+	tcb->current_priority = *((uint16_t *) tcb->data);
+	priority_level_head = &(_OS_FPSheduler.priority_list[tcb->current_priority]);
+	list_remove(priority_level_head, tcb);
+
+	/* reset modify priority flag */
+	tcb->state &= ~TASK_STATE_MODIFY_PRIORITY;		
+}
+
+static void move_to_wait_list(OS_TCB_t * tcb) {
+	/* remove task from current priority list */
+	OS_TCB_t * * priority_level_head = &(_OS_FPSheduler.priority_list[tcb->current_priority]);
+	list_remove(priority_level_head, tcb);
+	
+	/* add task to wait list */
+	heap_insert(tcb->data, tcb);
+}
+
+static void move_from_wait_list(OS_TCB_t * tcb) {	
+	/* reset WAIT flag */
+	tcb->state &= ~TASK_STATE_WAIT;
+	
+	/* add task to priority list */
+	OS_TCB_t * * priority_level_head = &(_OS_FPSheduler.priority_list[tcb->current_priority]);
+	list_add(priority_level_head, tcb);
+}
+
 /* Round-robin scheduler */
-OS_TCB_t const * _OS_schedule(void) {	
+OS_TCB_t const * _OS_schedule(void) {
+	/* process pending list */
+	while (_OS_FPSheduler.pending_list_head) {
+		OS_TCB_t * pending_tcb = pop_pending();
+		
+		/* If pending move between priority levels */
+		if (pending_tcb->state & TASK_STATE_MODIFY_PRIORITY) {
+			modify_priority(pending_tcb);
+			continue;
+		}
+		
+		/* If pending move to wait_list */
+		if (pending_tcb->state & TASK_STATE_WAIT) {
+			move_to_wait_list(pending_tcb);
+			continue;
+		}
+	
+		/* If pending move from wait_list */
+		if (pending_tcb->state & TASK_STATE_WAIT) {
+			move_from_wait_list(pending_tcb);
+			continue;
+		}
+	}
+	
 	/* remove empty priority levels from scheduler heap */
 	while (!*((OS_TCB_t * *) heap_peak(_OS_FPSheduler.scheduler))) {
 		heap_extract(_OS_FPSheduler.scheduler);
@@ -117,9 +199,9 @@ OS_TCB_t const * _OS_schedule(void) {
 void OS_initialiseTCB(OS_TCB_t * TCB, uint32_t * const stack, void (* const func)(void const * const), void const * const data, uint16_t priority) {
 	TCB->sp = stack - (sizeof(_OS_StackFrame_t) / sizeof(uint32_t));
 	TCB->state = 0;
-	TCB->prev = TCB->next = 0;
+	TCB->prev = TCB->next = TCB->pending_next = 0;
 	TCB->current_priority = TCB->initial_priority = priority;
-	TCB->pending_heap = 0;
+	TCB->wake_time = 0;
 	_OS_StackFrame_t *sf = (_OS_StackFrame_t *)(TCB->sp);
 	/* By placing the address of the task function in pc, and the address of _OS_task_end() in lr, the task
 	   function will be executed on the first context switch, and if it ever exits, _OS_task_end() will be
@@ -159,3 +241,59 @@ void _OS_taskExit_delegate(void) {
 	list_remove(priority_level_head, tcb);
 	SCB->ICSR = SCB_ICSR_PENDSVSET_Msk;
 }
+
+void _OS_wait_delegate(void * const stack) {
+	/* Get wait_list heap */
+	_OS_SVC_StackFrame_t * const s = (_OS_SVC_StackFrame_t * const) stack;
+	heap_t * wait_list = (heap_t *) s->r0;
+	
+	/* Get running task */
+	OS_TCB_t * tcb = OS_currentTCB();
+	
+	/* Set task wait flag */
+	tcb->state |= TASK_STATE_WAIT;
+	
+	/* Set pending task destination */
+	tcb->data = wait_list;
+	
+	/* Add task to pending list */
+	push_pending(tcb);
+	
+}
+
+void _OS_notify_delegate(void * const stack){
+	/* Get wait_list heap */
+	_OS_SVC_StackFrame_t * const s = (_OS_SVC_StackFrame_t * const) stack;
+	heap_t * wait_list = (heap_t *) s->r0;
+	
+	/* Get notified task */
+	OS_TCB_t * tcb = heap_extract(wait_list);
+	
+	/* Reset task wait flag */
+	tcb->state &= ~TASK_STATE_WAIT;
+	
+	/* Set pending task location */
+	tcb->data = wait_list;
+	
+	/* Add task to pending list */
+	push_pending(tcb);
+}
+
+void _OS_modifyPriority_delegate(void * const stack){
+	/* Get new task priority */
+	_OS_SVC_StackFrame_t * const s = (_OS_SVC_StackFrame_t * const) stack;
+	uint16_t new_priority = (uint16_t) s->r0;
+	
+	/* Get running task */
+	OS_TCB_t * tcb = OS_currentTCB();
+	
+	/* Set task new priority */
+	tcb->data = &new_priority;
+	
+	/* Set task ascend priority flag */
+	tcb->state |= TASK_STATE_MODIFY_PRIORITY;
+	
+	/* Add task to pending list */
+	push_pending(tcb);
+}
+

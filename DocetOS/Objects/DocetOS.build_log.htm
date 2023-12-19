@@ -22,7 +22,7 @@ Dialog DLL:      TCM.DLL V1.53.0.0
  
 <h2>Project:</h2>
 M:\ARM_Assignment_DocetOS\DocetOS\DocetOS.uvprojx
-Project File Date:  12/18/2023
+Project File Date:  12/19/2023
 
 <h2>Output:</h2>
 *** Using Compiler 'V6.16', folder: 'c:\Keil_v5\ARM\ARMCLANG\Bin'
@@ -30,15 +30,15 @@ Rebuild target 'STM32F407 Flash'
 assembling os_asm.s...
 assembling startup_stm32f407xx.s...
 compiling hardfault.c...
-compiling retarget_io.c...
 compiling min_heap.c...
 compiling main.c...
 compiling system_stm32f4xx.c...
-compiling utils.c...
+compiling retarget_io.c...
 compiling scheduler.c...
 compiling os.c...
+compiling utils.c...
 linking...
-Program Size: Code=12588 RO-data=1072 RW-data=228 ZI-data=3108  
+Program Size: Code=13140 RO-data=1072 RW-data=232 ZI-data=3112  
 ".\Objects\DocetOS.axf" - 0 Error(s), 0 Warning(s).
 
 <h2>Software Packages used:</h2>
@@ -73,18 +73,18 @@ Package Vendor: Keil
 
    * Component: Keil.ARM Compiler::Compiler:I/O:STDOUT:User:1.2.0
       Source file:   Template\stdout_user.c
-      Source file:   Source\retarget_io.c
-      Source file:   Template\stdout_USART.c
       Source file:   Template\stdout_display.c
+      Source file:   Template\stdout_USART.c
+      Source file:   Source\retarget_io.c
 
    * Component: Keil.ARM Compiler::Compiler:I/O:TTY:User:1.2.0
-      Source file:   Template\tty_user.c
       Source file:   Source\retarget_io.c
+      Source file:   Template\tty_user.c
 
    * Component: Keil::Device:Startup:2.6.3
+      Source file:   MDK\Device\Source\ARM\STM32F40xxx_41xxx_OPT.s
       Source file:   MDK\Device\Source\ARM\STM32F4xx_OTP.s
       Include file:  Drivers\CMSIS\Device\ST\STM32F4xx\Include\stm32f4xx.h
-      Source file:   MDK\Device\Source\ARM\STM32F40xxx_41xxx_OPT.s
       Source file:   Drivers\CMSIS\Device\ST\STM32F4xx\Source\Templates\arm\startup_stm32f407xx.s
       Source file:   Drivers\CMSIS\Device\ST\STM32F4xx\Source\Templates\system_stm32f4xx.c
 Build Time Elapsed:  00:00:01

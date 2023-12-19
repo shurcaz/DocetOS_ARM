@@ -19,6 +19,9 @@ enum OS_SVC_e {
 	OS_SVC_EXIT,
 	OS_SVC_YIELD,
 	OS_SVC_SCHEDULE,
+	OS_SVC_WAIT,
+	OS_SVC_NOTIFY,
+	OS_SVC_MODIFY_PRIORITY
 };
 
 /***************************/
@@ -140,6 +143,9 @@ extern OS_TCB_t * volatile _currentTCB;
 
 /* svc */
 #define _OS_task_exit() _svc_0(OS_SVC_EXIT)
+#define _OS_SVC_WAIT(heap_ptr) _svc_1(heap_ptr, OS_SVC_WAIT)
+#define _OS_SVC_NOTIFY(heap_ptr) _svc_1(heap_ptr, OS_SVC_NOTIFY)
+#define _OS_SVC_MODIFY_PRIORITY(priority) _svc_1(priority, OS_SVC_MODIFY_PRIORITY)
 
 /* C */
 void _OS_task_end(void);

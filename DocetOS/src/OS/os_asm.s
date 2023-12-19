@@ -15,6 +15,9 @@
     IMPORT _OS_taskExit_delegate
     IMPORT _OS_yield_delegate
     IMPORT _OS_schedule_delegate
+	IMPORT _OS_wait_delegate
+	IMPORT _OS_notify_delegate
+	IMPORT _OS_modifyPriority_delegate
     
 SVC_Handler
 	; r7 contains requested handler, on entry
@@ -38,6 +41,9 @@ SVC_tableStart
     DCD _OS_taskExit_delegate
     DCD _OS_yield_delegate
     DCD _OS_schedule_delegate
+	DCD _OS_wait_delegate
+	DCD _OS_notify_delegate
+	DCD _OS_modifyPriority_delegate
 SVC_tableEnd
 
     ALIGN
