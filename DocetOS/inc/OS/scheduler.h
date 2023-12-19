@@ -2,23 +2,46 @@
 #define __scheduler_h__
 
 #include <stdint.h>
+#include "OS/Lib/min_heap.h"
+
+/***************************************/
+/* Scheduler Configuration Definitions */
+/***************************************/
+
+#define PRIORITY_LEVELS 16			// Number of priority levels
+#define MAX_TASKS 			64			// Maximum number of tasks 
 
 /*========================*/
 /*      EXTERNAL API      */
 /*========================*/
 
+/* Task Control Block Structure*/
 typedef struct s_OS_TCB_t {
 	/* Task stack pointer.  It's important that this is the first entry in the structure,
 	   so that a simple double-dereference of a TCB pointer yields a stack pointer. */
 	void * volatile sp;
-	/* This field is intended to describe the state of the thread - whether it's yielding,
-	   runnable, or whatever.  Only one bit of this field is currently defined (see the #define
-	   below), so you can use the remaining 31 bits for anything you like. */
+	
+	/* Field used to describe task state, current assigned flags:
+	 * bit 0 - yield flag
+	 * bit 1 - wait flag
+	 * bit 2 - ascend priority flag
+	 */
 	uint32_t volatile state;
+	
+	/* pointers to adjacent TCBs' in round-robin */
 	struct s_OS_TCB_t * prev;
 	struct s_OS_TCB_t * next;
+	
+	/* Task priority trackers */
+	uint16_t volatile current_priority;
+	uint16_t initial_priority;
+	
+	/* Task tracker for a pending move to/from a heap */
+	heap_t * pending_heap;
+	
+	/* Misc data pointer to be used for heap specific operations */
+	void * data;
 } OS_TCB_t;
-
 
 /******************************************/
 /* Task creation and management functions */
@@ -34,8 +57,10 @@ typedef struct s_OS_TCB_t {
      the result must be checked for alignment, and then the stack size must be added to the pointer for passing
      to this function.
    The third argument is a pointer to the function that the task should execute.
-   The fourth argument is a void pointer to data that the task should receive. */
-void OS_initialiseTCB(OS_TCB_t * TCB, uint32_t * const stack, void (* const func)(void const * const), void const * const data);
+   The fourth argument is a void pointer to data that the task should receive. 
+	 The fifth argument is the initial priority of the task.
+*/
+void OS_initialiseTCB(OS_TCB_t * TCB, uint32_t * const stack, void (* const func)(void const * const), void const * const data, uint16_t priority);
 
 void OS_addTask(OS_TCB_t * const tcb);
 
@@ -47,15 +72,26 @@ void OS_addTask(OS_TCB_t * const tcb);
 
 OS_TCB_t const * _OS_schedule(void);
 
-typedef struct {
-	OS_TCB_t * head;
-} _OS_tasklist_t;
+/* Fixed Priority Scheduler Structure */
+typedef struct s_OS_FPSheduler_t {
+	/* Scheduler heap, holds pointers to heads of priority level round-robins */
+	heap_t * scheduler;
+	
+	/* Array of pointers to each priority level list head */
+	OS_TCB_t * priority_list[PRIORITY_LEVELS];
+	
+	/* Pointer to head of pending list,
+     a list of tasks awaiting processing during OS_Schedule	*/
+	OS_TCB_t * pending_list_head;	
+} _OS_FPSheduler_t;
 
 /* SVC delegates */
 void _OS_taskExit_delegate(void);
 
 /* Constants that define bits in a thread's 'state' field. */
-#define TASK_STATE_YIELD    (1UL << 0) // Bit zero is the 'yield' flag
+#define TASK_STATE_YIELD    					(1UL << 0) // Bit zero is the 'yield' flag
+#define TASK_STATE_WAIT    						(1UL << 1) // Bit one is the 'wait' flag
+#define TASK_STATE_ASCEND_PRIORITY    (1UL << 2) // Bit two is the 'ascend_priority' flag
 
 #endif /* os_internal */
 

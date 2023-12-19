@@ -33,8 +33,8 @@ int main(void) {
 	static OS_TCB_t TCB1, TCB2;
 
 	/* Initialise the TCBs using the two functions above */
-	OS_initialiseTCB(&TCB1, stack1 + 128, task1, NULL);
-	OS_initialiseTCB(&TCB2, stack2 + 128, task2, NULL);
+	OS_initialiseTCB(&TCB1, stack1 + 128, task1, NULL, 1);
+	OS_initialiseTCB(&TCB2, stack2 + 128, task2, NULL, 2);
 	
 	/* Add the tasks to the scheduler */
 	OS_addTask(&TCB1);

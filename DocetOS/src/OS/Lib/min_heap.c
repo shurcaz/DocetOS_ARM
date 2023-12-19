@@ -1,4 +1,4 @@
-#include "OS/Services/min_heap.h"
+#include "OS/Lib/min_heap.h"
 
 
 /* ##########################  Internal Heap Functions  ########################## */
@@ -15,6 +15,10 @@ static void swap(void * * addr1, void * * addr2) {
 	*addr2 = temp;
 }
 
+/*
+ *	Beginning from the end of the heap,
+ *	sorts end element up heap
+ */
 static void heap_up(heap_t *heap) {
 	/* 1-Indexed array pointer */
 	void * * nodeStore = heap->store - 1;
@@ -35,6 +39,10 @@ static void heap_up(heap_t *heap) {
 	}
 }
 
+/*
+ *	Beginning from the root of the heap,
+ *	sorts root element down heap
+ */
 static void heap_down(heap_t *heap) {
 	/* 1-Indexed array pointer */
 	void * * nodeStore = heap->store - 1;
@@ -72,23 +80,59 @@ static void heap_down(heap_t *heap) {
 
 /* ##############################  External Functions  ########################### */
 
-void heap_insert(heap_t *heap, void * item) {
-	/* The new element is always added to the end of a heap */
-	heap->store[(heap->size)++] = item;
-	heap_up(heap);
-}
-
-void * heap_extract(heap_t * heap) {
-	/* The root value is extracted, and the space filled by the value from the end */
-	void * item = heap->store[0];
-	if (heap_isEmpty(heap)) {
-		heap->store[0] = heap->store[--(heap->size)];
-		heap_down(heap);
+/*
+ *	Insert new item into a heap
+ *
+ *	argument heap is a pointer to a heap struct
+ *	argument item is the item to add to the heap
+ *	returns 1 if added successfully, else 0
+ */
+uint_fast8_t heap_insert(heap_t * heap, void * item) {
+	if (heap->size < heap->capacity) {
+		/* The new element is always added to the end of a heap */
+		heap->store[(heap->size)++] = item;
+		
+		/* sort new element up heap */
+		heap_up(heap);
+		
+		return 1;
+	} else {
+		return 0;
 	}
-	return item;
 }
 
-uint_fast8_t heap_isEmpty(heap_t *heap) {
-	return !(heap->size);
+/*
+ *	Extract the root item of a heap
+ *
+ *	argument heap is a pointer to a heap struct
+ *	returns a pointer to the root item, else 0 if heap empty
+ */
+void * heap_extract(heap_t * heap) {
+	/* If heap is not empty */
+	if (heap->size) {
+		/* extract root */
+		void * item = heap->store[0];
+		/* move last item in heap to root */
+		heap->store[0] = heap->store[--(heap->size)];
+		
+		/* sort new root down heap */
+		heap_down(heap);
+		
+		/* return extracted root */
+		return item;
+	}
+	
+	/* return 0 if heap empty */
+	return 0;
+}
+
+/*
+ *  Peak the root item of the heap
+ *
+ *  argument heap is a pointer to a heap struct
+ *  returns a pointer to the root item
+ */
+void * heap_peak(heap_t * heap) {
+	return heap->store[0];
 }
 
