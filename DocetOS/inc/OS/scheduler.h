@@ -23,8 +23,6 @@ typedef struct s_OS_TCB_t {
 	
 	/* Field used to describe task state, current assigned flags:
 	 * bit 0 - yield flag, task has yielded and triggered a context switch
-	 * bit 1 - wait flag, task is waiting to be moved to a wait_list or is already in one
-	 * bit 2 - modify_priority flag, task is waiting a priority modification
 	 */
 	uint32_t volatile state;
 	
@@ -36,12 +34,8 @@ typedef struct s_OS_TCB_t {
 	uint16_t volatile current_priority;
 	uint16_t initial_priority;
 	
-	/* Task tracker for a pending move to/from a heap */
-	struct s_OS_TCB_t * pending_next;
-	
 	/* Misc data pointer to be used for heap specific operations */
 	void * data;
-	uint32_t wake_time;
 } OS_TCB_t;
 
 /******************************************/
@@ -80,10 +74,6 @@ typedef struct s_OS_FPSheduler_t {
 	
 	/* Array of pointers to each priority level list head */
 	OS_TCB_t * priority_list[PRIORITY_LEVELS];
-	
-	/* Pointer to head of pending list,
-     a list of tasks awaiting processing during OS_Schedule	*/
-	OS_TCB_t * pending_list_head;	
 } _OS_FPSheduler_t;
 
 /* SVC delegates */
@@ -94,8 +84,6 @@ void _OS_modifyPriority_delegate(void * const stack);
 
 /* Constants that define bits in a thread's 'state' field. */
 #define TASK_STATE_YIELD    					(1UL << 0) // Bit zero is the 'yield' flag
-#define TASK_STATE_WAIT    						(1UL << 1) // Bit one is the 'wait' flag
-#define TASK_STATE_MODIFY_PRIORITY    (1UL << 2) // Bit two is the 'modify_priority' flag
 
 #endif /* os_internal */
 
