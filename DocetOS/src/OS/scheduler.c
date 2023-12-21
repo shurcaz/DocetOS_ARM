@@ -2,6 +2,7 @@
 
 #include "OS/scheduler.h"
 #include "OS/os.h"
+#include "OS/sleep.h"
 #include "OS/Lib/min_heap.h"
 
 #include "stm32f4xx.h"
@@ -45,23 +46,25 @@ static _OS_FPSheduler_t _OS_FPSheduler = { .scheduler = &priority_heap, .priorit
  * argument queue_head_ptr is a pointer to the head pointer in the priority list array
  * argument task is the task to be added to the priority level round robin
  */
-static void list_add(OS_TCB_t * * queue_head_ptr, OS_TCB_t * task) {	
+static void scheduler_add(OS_TCB_t * tcb) {	
+	OS_TCB_t * * queue_head_ptr = &(_OS_FPSheduler.priority_list[tcb->current_priority]);
+	
 	/* If priority level is not empty */
 	if (*queue_head_ptr) {
 		/* set tasks adjacent tasks */
-		task->next = *queue_head_ptr;
-		task->prev = (*queue_head_ptr)->prev;
+		tcb->next = *queue_head_ptr;
+		tcb->prev = (*queue_head_ptr)->prev;
 		
 		/* update adjacent tasks */
-		task->prev->next = task;
-		(*queue_head_ptr)->prev = task;
+		tcb->prev->next = tcb;
+		(*queue_head_ptr)->prev = tcb;
 	} else {
 		/* set task adjacent tasks to self */
-		task->next = task;
-		task->prev = task;
+		tcb->next = tcb;
+		tcb->prev = tcb;
 		
 		/* update head */
-		*queue_head_ptr = task;
+		*queue_head_ptr = tcb;
 		
 		/* add priority level to scheduler heap */
 		heap_insert(_OS_FPSheduler.scheduler, queue_head_ptr);
@@ -73,28 +76,39 @@ static void list_add(OS_TCB_t * * queue_head_ptr, OS_TCB_t * task) {
  * argument queue_head_ptr is a pointer to the head pointer in the priority list array
  * argument task is the task to be removed from the priority level round robin
  */
-static void list_remove(OS_TCB_t * * queue_head_ptr, OS_TCB_t * task) {
+static void scheduler_remove(OS_TCB_t * tcb) {
+	OS_TCB_t * * queue_head_ptr = &(_OS_FPSheduler.priority_list[tcb->current_priority]);
+	
 	/* If task to be removed is the list head */
-	if (*queue_head_ptr == task) {
+	if (*queue_head_ptr == tcb) {
 		/* If task is last item in list */
-		if (task->next == task) {
+		if (tcb->next == tcb) {
 			*queue_head_ptr = 0;
 			return;
 		}
 		
 		/* Increment head */
-		*queue_head_ptr = task->next;
+		*queue_head_ptr = tcb->next;
 	}
 	
 	/* Update adjacent tasks */
-	task->prev->next = task->next;
-	task->next->prev = task->prev;
+	tcb->prev->next = tcb->next;
+	tcb->next->prev = tcb->prev;
 }
 
 /* Round-robin scheduler */
 OS_TCB_t const * _OS_schedule(void) {
+	/* Verify and wake any tasks that can be woken */
+	OS_TCB_t * sleepy_task;
+	while (( sleepy_task = _OS_verifySleepList() )) {
+		/* Add task to scheduler */
+		scheduler_add(sleepy_task);	
+	}
+	
 	/* remove empty priority levels from scheduler heap */
-	while (!*((OS_TCB_t * *) heap_peak(_OS_FPSheduler.scheduler))) {
+	while (_OS_FPSheduler.scheduler->size && !*((OS_TCB_t * *) heap_peak(_OS_FPSheduler.scheduler))) {
+		/* If scheduler heap is not empty and the root priority level is zero
+			 Remove top priority level from scheduler heap */
 		heap_extract(_OS_FPSheduler.scheduler);
 	}
 	
@@ -155,8 +169,7 @@ void OS_initialiseTCB(OS_TCB_t * TCB, uint32_t * const stack, void (* const func
 
 /* 'Add task' */
 void OS_addTask(OS_TCB_t * const tcb) {
-	OS_TCB_t * * priority_level_head = &(_OS_FPSheduler.priority_list[tcb->current_priority]);
-	list_add(priority_level_head, tcb);
+	scheduler_add(tcb);
 }
 
 
@@ -168,8 +181,7 @@ void OS_addTask(OS_TCB_t * const tcb) {
 void _OS_taskExit_delegate(void) {
 	/* Remove the given TCB from the list of tasks so it won't be run again */
 	OS_TCB_t * tcb = OS_currentTCB();
-	OS_TCB_t * * priority_level_head = &(_OS_FPSheduler.priority_list[tcb->current_priority]);
-	list_remove(priority_level_head, tcb);
+	scheduler_remove(tcb);
 	SCB->ICSR = SCB_ICSR_PENDSVSET_Msk;
 }
 
@@ -179,16 +191,16 @@ void _OS_wait_delegate(void * const stack) {
 	heap_t * wait_list = (heap_t *) s->r0;
 	
 	/* Get running task */
-	OS_TCB_t * tcb = OS_currentTCB();
+	OS_TCB_t * currentTCB = OS_currentTCB();
 	
 	/* Remove task from scheduler */
-	OS_TCB_t * * priority_level_head = &(_OS_FPSheduler.priority_list[tcb->current_priority]);
-	list_remove(priority_level_head, tcb);
+	scheduler_remove(currentTCB);
 	
 	/* Add to wait_list */
-	heap_insert(wait_list, tcb);
+	heap_insert(wait_list, currentTCB);
 	
 	/* Trigger context switch */
+	currentTCB->state |= TASK_STATE_YIELD;
 	SCB->ICSR = SCB_ICSR_PENDSVSET_Msk;
 }
 
@@ -201,8 +213,7 @@ void _OS_notify_delegate(void * const stack){
 	OS_TCB_t * tcb = heap_extract(wait_list);
 	
 	/* Add task to scheduler */
-	OS_TCB_t * * priority_level_head = &(_OS_FPSheduler.priority_list[tcb->current_priority]);
-	list_add(priority_level_head, tcb);
+	scheduler_add(tcb);
 	
 	/* Trigger context switch */
 	SCB->ICSR = SCB_ICSR_PENDSVSET_Msk;
@@ -218,15 +229,13 @@ void _OS_modifyPriority_delegate(void * const stack){
 	
 	if (new_priority != tcb->current_priority) {
 		/* Remove task from scheduler */
-		OS_TCB_t * * priority_level_head = &(_OS_FPSheduler.priority_list[tcb->current_priority]);
-		list_remove(priority_level_head, tcb);
+		scheduler_remove(tcb);
 		
 		/* Update Priority */
 		tcb->current_priority = new_priority;
 		
 		/* Add task back to scheduler */
-		priority_level_head = &(_OS_FPSheduler.priority_list[tcb->current_priority]);
-		list_add(priority_level_head, tcb);
+		scheduler_add(tcb);
 	}
 	
 }
