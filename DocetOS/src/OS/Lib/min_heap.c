@@ -29,12 +29,12 @@ static void heap_up(heap_t *heap) {
 	/* While not root element */
 	while (n > 1) {
 		/* If node bigger than parent */
-		if (heap->comparator(nodeStore[n], nodeStore[n>>1]) > 0) {
-			return;
-		} else {
+		if (heap->comparator(nodeStore[n], nodeStore[n>>1]) < 0) {
 			/* Swap child and parent */
 			swap(nodeStore + n, nodeStore + (n>>1));
 			n = n>>1;
+		} else {
+			return;
 		}
 	}
 }
@@ -62,7 +62,9 @@ static void heap_down(heap_t *heap) {
 		}
 		
 		/* if the children are bigger than parent, STOP */
-		if (heap->comparator(nodeStore[n], nodeStore[2*n]) < 0 && heap->comparator(nodeStore[n], nodeStore[(2*n)+1]) < 0) {
+		/* NOT and > operator used to avoid <=, equals needed to avoid swapping equal elements*/
+		if (!(heap->comparator(nodeStore[n], nodeStore[2*n]) > 0) && 
+				!(heap->comparator(nodeStore[n], nodeStore[(2*n)+1]) > 0)) {
 			return;
 		}
 		

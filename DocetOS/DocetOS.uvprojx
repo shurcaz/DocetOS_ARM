@@ -418,6 +418,11 @@
               <FileType>1</FileType>
               <FilePath>.\src\OS\sleep.c</FilePath>
             </File>
+            <File>
+              <FileName>mutex.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>.\src\OS\mutex.c</FilePath>
+            </File>
           </Files>
         </Group>
         <Group>

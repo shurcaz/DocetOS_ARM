@@ -113,19 +113,19 @@ OS_TCB_t const * _OS_schedule(void) {
 	}
 	
 	/* If priority heap not empty	*/
+	// TODO - refactor below for clarity
 	if (_OS_FPSheduler.scheduler->size) {
 		/* get root item */
 		OS_TCB_t * * ptr_to_head_ptr = (OS_TCB_t * *) heap_peak(_OS_FPSheduler.scheduler);
-		OS_TCB_t * item = *ptr_to_head_ptr;
-		
-		/* reset yield flag */
-		item->state &= ~TASK_STATE_YIELD;
 		
 		/* increment head */
-		*ptr_to_head_ptr = item->next;
+		*ptr_to_head_ptr = (*ptr_to_head_ptr)->next;
+		
+		/* reset yield flag */
+		(*ptr_to_head_ptr)->state &= ~TASK_STATE_YIELD;
 		
 		/* return root item */
-		return item;
+		return *ptr_to_head_ptr;
 	}
 	
 	/* No tasks are runnable, so return the idle task */
@@ -200,7 +200,6 @@ void _OS_wait_delegate(void * const stack) {
 	heap_insert(wait_list, currentTCB);
 	
 	/* Trigger context switch */
-	currentTCB->state |= TASK_STATE_YIELD;
 	SCB->ICSR = SCB_ICSR_PENDSVSET_Msk;
 }
 
@@ -212,8 +211,10 @@ void _OS_notify_delegate(void * const stack){
 	/* Get notified task */
 	OS_TCB_t * tcb = heap_extract(wait_list);
 	
-	/* Add task to scheduler */
-	scheduler_add(tcb);
+	if (tcb) {
+		/* Add task to scheduler */
+		scheduler_add(tcb);
+	}
 	
 	/* Trigger context switch */
 	SCB->ICSR = SCB_ICSR_PENDSVSET_Msk;
@@ -222,10 +223,8 @@ void _OS_notify_delegate(void * const stack){
 void _OS_modifyPriority_delegate(void * const stack){
 	/* Get new task priority */
 	_OS_SVC_StackFrame_t * const s = (_OS_SVC_StackFrame_t * const) stack;
-	uint16_t new_priority = (uint16_t) s->r0;
-	
-	/* Get running task */
-	OS_TCB_t * tcb = OS_currentTCB();
+	OS_TCB_t * tcb = (OS_TCB_t *) s->r0;
+	uint16_t new_priority = (uint16_t) s->r1;
 	
 	if (new_priority != tcb->current_priority) {
 		/* Remove task from scheduler */

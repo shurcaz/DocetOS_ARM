@@ -7,11 +7,11 @@
 static inline int_fast8_t wake_time_comparator(void * a, void * b) {
 	uint32_t wake_time_a = (uint32_t) ((OS_TCB_t *) a)->data;
 	uint32_t wake_time_b = (uint32_t) ((OS_TCB_t *) b)->data;
-	return (int_fast8_t) (wake_time_b - wake_time_a);
+	return (int_fast8_t) (wake_time_a - wake_time_b);
 }
 
-static void * store[PRIORITY_LEVELS];
-static heap_t sleep_list = HEAP_INITIALISER(store, PRIORITY_LEVELS, wake_time_comparator);
+static void * store[MAX_TASKS];
+static heap_t sleep_list = HEAP_INITIALISER(store, MAX_TASKS, wake_time_comparator);
 
 /*
  * Sleep function for specified number of system ticks
