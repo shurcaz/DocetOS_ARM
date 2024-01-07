@@ -16,10 +16,12 @@ static void swap(void * * addr1, void * * addr2) {
 }
 
 /*
- *	Beginning from the end of the heap,
- *	sorts end element up heap
+ *	Beginning from the last element of the heap,
+ *	sorts last element up heap
+ *
+ *	argument heap is a pointer to a heap
  */
-static void heap_up(heap_t *heap) {
+static void heap_up(heap_t * heap) {
 	/* 1-Indexed array pointer */
 	void * * nodeStore = heap->store - 1;
 	
@@ -42,8 +44,10 @@ static void heap_up(heap_t *heap) {
 /*
  *	Beginning from the root of the heap,
  *	sorts root element down heap
+ *
+ *	argument heap is a pointer to a heap
  */
-static void heap_down(heap_t *heap) {
+static void heap_down(heap_t * heap) {
 	/* 1-Indexed array pointer */
 	void * * nodeStore = heap->store - 1;
 	
@@ -61,10 +65,9 @@ static void heap_down(heap_t *heap) {
 			}
 		}
 		
-		/* if the children are bigger than parent, STOP */
-		/* NOT and > operator used to avoid <=, equals needed to avoid swapping equal elements*/
-		if (!(heap->comparator(nodeStore[n], nodeStore[2*n]) > 0) && 
-				!(heap->comparator(nodeStore[n], nodeStore[(2*n)+1]) > 0)) {
+		/* if the children are bigger than parent or equal, STOP */	
+		if (heap->comparator(nodeStore[2*n], nodeStore[n]) > 0 && 
+				heap->comparator(nodeStore[(2*n)+1], nodeStore[n]) > 0) {
 			return;
 		}
 		

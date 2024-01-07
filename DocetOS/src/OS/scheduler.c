@@ -24,8 +24,15 @@
 
 /* ##########################  Scheduler Initialisation  ########################## */
 
-
-/* comparison function and initialisation of priority heap */
+/*
+ *	priority heap comparitor function
+ *	Compares the priority of 2 control blocks
+ * 	Takes pointers a and b and casts them to pointers to pointers to task control blocks.
+ * 	Returns:
+ *			positive if priority a is larger than b
+ *			zero if priority a and b are equal
+ *			negative if priority a is smaller than b
+ */
 static inline int_fast8_t priority_comparator(void * a, void * b) {
 	uint16_t priority_a = (*((OS_TCB_t * *) a))->current_priority;
 	uint16_t priority_b = (*((OS_TCB_t * *) b))->current_priority;
