@@ -1,2 +1,60 @@
 \section{Executive Summary}
-Example test
+This report outlines several significant enhancements to the operation of the DocetOS embedded operating system, aimed at expanding the toolset available to users while maintaining robustness and compatibility with low-performance systems. The focus of these modifications is the implementation of fixed-priority scheduling, mutual exclusivity through the integration of a re-entrant mutex, and task management systems such as sleeping and inter-task communications. \hfill\break
+
+\setenumerate{noitemsep}
+\setitemize{nosep}
+\textbf{Key Modifications:}
+\begin{enumerate}
+	\item Fixed-Priority Scheduling
+	\begin{itemize}
+		\item Introduction of a fixed-priority scheduling algorithm to prioritise tasks based on predetermined priorities
+		\item Enhances control over task execution
+	\end{itemize}
+	
+	\item Task Sleeping
+	\begin{itemize}
+		\item Integration of a sleep orientated wait list to pause the execution of tasks for set periods
+		\item Expands functionality of tasks
+	\end{itemize}
+	
+	\item Re-entrant Mutex
+	\begin{itemize}
+		\item Introduction of a re-entrant mutex to facilitate exclusive access to a shared resource
+		\item Ensures consistency in data access and prevents race conditions
+	\end{itemize}
+	
+	\item Mutex Priority Inheritance
+	\begin{itemize}
+		\item Integration of priority inheritance of tasks owning a mutex with a higher priority task in the mutex wait list
+		\item Prevents priority inversion issues and streamlines the execution of critical tasks
+	\end{itemize}
+	
+	\item Wait and Notify System
+	\begin{itemize}
+		\item Overhaul of the system managing wait and notification of tasks by splitting the centralised wait list into individual sorted wait-lists per blocking item.
+		\item Enhances speed of task verification and notification
+	\end{itemize}
+	
+	\item Memory Pool
+	\begin{itemize}
+		\item Introduction of a memory pool allowing the reservation of memory for use during system run time
+		\item Consolidates memory management and gives the ability to define maximum system OS memory allocation at runtime
+	\end{itemize}
+	
+	\item Task Communication
+	\begin{itemize}
+		\item Integration of a queue-based task communication system, utilising a memory pool to allow the transfer of data across tasks
+		\item Introduces cooperation between tasks towards a common goal
+	\end{itemize}
+	
+\end{enumerate}
+\textbf{Benefits:}
+\begin{enumerate}
+	\item Improved Determinism
+	\item Enhanced Reliability
+	\item Optimised Resource Utilisation
+	\item Compatibility with Low-Performance Systems
+	\item Memory footprint clarity
+	\item System Synchronisation
+\end{enumerate}
+These modifications to DocetOS are a significant step towards meeting the current demands required of real-time embedded systems and provide an opportunity to investigate known techniques used in the professional industry. This report provides a detailed account of the modifications, their rationale, and the anticipated benefits, resulting in a product that can be modified for use in future applications. \hfill\break

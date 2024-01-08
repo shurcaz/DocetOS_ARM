@@ -1,1 +1,16 @@
 \section{Introduction}
+\subsection{DocetOS}
+DocetOS is a simple embedded system operating system created with the intention of providing a basic skeleton framework to teach the basics of operating system operation. It consists of the routines to initialise task control blocks, and a context switcher to switch between tasks each system tick. Thus, the system at this point is vulnerable to bugs and limitations that necessitate changes to OS functionality to equip it for real-world implementation.\hfill\newline
+The current state of DocetOS, allows multiple tasks to run concurrently to achieve their goals which works completely fine for a small number of tasks. But with each new task added to the system, the runtime of all other tasks slow down proportionally, and access to shared resources becomes more complex and vulnerable to race conditions. By implementing functionality that provides more in-depth control of tasks, we can modify their behaviour within the scheduler and provide support for the concurrent execution of many additional tasks with minimal impact on performance and risk of unexpected race conditions, removing current limitations.
+
+\subsection{Objectives of Modifications}
+Throughout this report we will increase the functionality of DocetOS by completing the follow objectives:
+\begin{itemize}
+	\item	Efficient task manipulation capabilities through the implementation of a fixed-priority scheduler with extensive task waiting routines to move tasks to and from custom wait lists.
+	\item	Mutual exclusion through the implementation of a re-entrant mutex with task priority inheritance functionality
+	\item	Memory management and inter-task communication using a memory pool, utilising memory reserved for OS usage within the embedded system.
+
+\end{itemize}
+
+\subsection{Structure of Report}
+The subsequent sections of this report provide information on each modification, including the rationale of the modification, an exploration and justification of the design considerations taken during the design process, an overview of the modifications final implemented design and functionality, and if required, information related to the safe usage of the implemented design related to mutual exclusivity that needs to be kept in mind if further modification was to take place in the future.
