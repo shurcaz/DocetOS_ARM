@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.141592653-2.6-1.40.25 (MiKTeX 23.5) (preloaded format=pdflatex 2024.1.8)  8 JAN 2024 02:02
+This is pdfTeX, Version 3.141592653-2.6-1.40.25 (MiKTeX 23.5) (preloaded format=pdflatex 2024.1.16)  16 JAN 2024 02:44
 entering extended mode
  \write18 enabled.
  %&-line parsing enabled.
@@ -299,6 +299,27 @@ Package: ragged2e 2023/04/04 v3.5 ragged2e Package
 \RaggedRightParindent=\skip67
 \JustifyingParindent=\skip68
 )
+(C:\Program Files\MiKTeX\tex/latex/tools\tabularx.sty
+Package: tabularx 2020/01/15 v2.11c `tabularx' package (DPC)
+
+(C:\Program Files\MiKTeX\tex/latex/tools\array.sty
+Package: array 2022/09/04 v2.5g Tabular extension package (FMi)
+\col@sep=\dimen157
+\ar@mcellbox=\box54
+\extrarowheight=\dimen158
+\NC@list=\toks26
+\extratabsurround=\skip69
+\backup@length=\skip70
+\ar@cellbox=\box55
+)
+\TX@col@width=\dimen159
+\TX@old@table=\dimen160
+\TX@old@col=\dimen161
+\TX@target=\dimen162
+\TX@delta=\dimen163
+\TX@cols=\count285
+\TX@ftn=\toks27
+)
 (C:\Program Files\MiKTeX\tex/latex/minted\minted.sty
 Package: minted 2022/12/12 v2.7 Yet another Pygments shim for LaTeX
 
@@ -307,11 +328,11 @@ Package: fvextra 2022/11/30 v1.5 fvextra - extensions and patches for fancyvrb
 
 (C:\Program Files\MiKTeX\tex/latex/fancyvrb\fancyvrb.sty
 Package: fancyvrb 2023/01/19 4.5a verbatim text (tvz,hv)
-\FV@CodeLineNo=\count285
+\FV@CodeLineNo=\count286
 \FV@InFile=\read2
-\FV@TabBox=\box54
-\c@FancyVerbLine=\count286
-\FV@StepNumber=\count287
+\FV@TabBox=\box56
+\c@FancyVerbLine=\count287
+\FV@StepNumber=\count288
 \FV@OutFile=\write3
 )
 (C:\Program Files\MiKTeX\tex/latex/upquote\upquote.sty
@@ -320,62 +341,62 @@ tim
 )
 (C:\Program Files\MiKTeX\tex/latex/lineno\lineno.sty
 Package: lineno 2023/05/19 line numbers on paragraphs v5.2
-\linenopenalty=\count288
-\output=\toks26
-\linenoprevgraf=\count289
-\linenumbersep=\dimen157
-\linenumberwidth=\dimen158
-\c@linenumber=\count290
-\c@pagewiselinenumber=\count291
-\c@LN@truepage=\count292
-\c@internallinenumber=\count293
-\c@internallinenumbers=\count294
-\quotelinenumbersep=\dimen159
-\bframerule=\dimen160
-\bframesep=\dimen161
-\bframebox=\box55
-\linenoamsmath@ams@eqpen=\count295
+\linenopenalty=\count289
+\output=\toks28
+\linenoprevgraf=\count290
+\linenumbersep=\dimen164
+\linenumberwidth=\dimen165
+\c@linenumber=\count291
+\c@pagewiselinenumber=\count292
+\c@LN@truepage=\count293
+\c@internallinenumber=\count294
+\c@internallinenumbers=\count295
+\quotelinenumbersep=\dimen166
+\bframerule=\dimen167
+\bframesep=\dimen168
+\bframebox=\box57
+\linenoamsmath@ams@eqpen=\count296
 LaTeX Info: Redefining \\ on input line 3146.
 )
-\c@FV@TrueTabGroupLevel=\count296
-\c@FV@TrueTabCounter=\count297
-\FV@TabBox@Group=\box56
-\FV@TmpLength=\skip69
-\c@FV@HighlightLinesStart=\count298
-\c@FV@HighlightLinesStop=\count299
-\FV@LoopCount=\count300
-\FV@NCharsBox=\box57
-\FV@BreakIndent=\dimen162
-\FV@BreakIndentNChars=\count301
-\FV@BreakSymbolSepLeft=\dimen163
-\FV@BreakSymbolSepLeftNChars=\count302
-\FV@BreakSymbolSepRight=\dimen164
-\FV@BreakSymbolSepRightNChars=\count303
-\FV@BreakSymbolIndentLeft=\dimen165
-\FV@BreakSymbolIndentLeftNChars=\count304
-\FV@BreakSymbolIndentRight=\dimen166
-\FV@BreakSymbolIndentRightNChars=\count305
-\c@FancyVerbLineBreakLast=\count306
-\FV@LineBox=\box58
-\FV@LineIndentBox=\box59
-\c@FV@BreakBufferDepth=\count307
-\FV@LineWidth=\dimen167
+\c@FV@TrueTabGroupLevel=\count297
+\c@FV@TrueTabCounter=\count298
+\FV@TabBox@Group=\box58
+\FV@TmpLength=\skip71
+\c@FV@HighlightLinesStart=\count299
+\c@FV@HighlightLinesStop=\count300
+\FV@LoopCount=\count301
+\FV@NCharsBox=\box59
+\FV@BreakIndent=\dimen169
+\FV@BreakIndentNChars=\count302
+\FV@BreakSymbolSepLeft=\dimen170
+\FV@BreakSymbolSepLeftNChars=\count303
+\FV@BreakSymbolSepRight=\dimen171
+\FV@BreakSymbolSepRightNChars=\count304
+\FV@BreakSymbolIndentLeft=\dimen172
+\FV@BreakSymbolIndentLeftNChars=\count305
+\FV@BreakSymbolIndentRight=\dimen173
+\FV@BreakSymbolIndentRightNChars=\count306
+\c@FancyVerbLineBreakLast=\count307
+\FV@LineBox=\box60
+\FV@LineIndentBox=\box61
+\c@FV@BreakBufferDepth=\count308
+\FV@LineWidth=\dimen174
 )
 (C:\Program Files\MiKTeX\tex/latex/base\ifthen.sty
 Package: ifthen 2022/04/13 v1.1d Standard LaTeX ifthen package (DPC)
 )
 (C:\Program Files\MiKTeX\tex/latex/tools\calc.sty
 Package: calc 2017/05/25 v4.3 Infix arithmetic (KKT,FJ)
-\calc@Acount=\count308
-\calc@Bcount=\count309
-\calc@Adimen=\dimen168
-\calc@Bdimen=\dimen169
-\calc@Askip=\skip70
-\calc@Bskip=\skip71
+\calc@Acount=\count309
+\calc@Bcount=\count310
+\calc@Adimen=\dimen175
+\calc@Bdimen=\dimen176
+\calc@Askip=\skip72
+\calc@Bskip=\skip73
 LaTeX Info: Redefining \setlength on input line 80.
 LaTeX Info: Redefining \addtolength on input line 81.
-\calc@Ccount=\count310
-\calc@Cskip=\skip72
+\calc@Ccount=\count311
+\calc@Cskip=\skip74
 )
 (C:\Program Files\MiKTeX\tex/latex/tools\shellesc.sty
 Package: shellesc 2019/11/08 v1.0c unified shell escape interface for LaTeX
@@ -395,34 +416,34 @@ Package: ifluatex 2019/10/25 v1.5 ifluatex legacy package. Use iftex instead.
 ))
 (C:\Program Files\MiKTeX\tex/latex/xstring\xstring.sty
 (C:\Program Files\MiKTeX\tex/generic/xstring\xstring.tex
-\integerpart=\count311
-\decimalpart=\count312
+\integerpart=\count312
+\decimalpart=\count313
 )
 Package: xstring 2023/01/14 v1.85 String manipulations (CT)
 )
 (C:\Program Files\MiKTeX\tex/latex/framed\framed.sty
 Package: framed 2011/10/22 v 0.96: framed or shaded text with page breaks
-\OuterFrameSep=\skip73
-\fb@frw=\dimen170
-\fb@frh=\dimen171
-\FrameRule=\dimen172
-\FrameSep=\dimen173
+\OuterFrameSep=\skip75
+\fb@frw=\dimen177
+\fb@frh=\dimen178
+\FrameRule=\dimen179
+\FrameSep=\dimen180
 )
 (C:\Program Files\MiKTeX\tex/latex/float\float.sty
 Package: float 2001/11/08 v1.3d Float enhancements (AL)
-\c@float@type=\count313
-\float@exts=\toks27
-\float@box=\box60
-\@float@everytoks=\toks28
-\@floatcapt=\box61
+\c@float@type=\count314
+\float@exts=\toks29
+\float@box=\box62
+\@float@everytoks=\toks30
+\@floatcapt=\box63
 )
 \minted@appexistsfile=\read3
-\minted@bgbox=\box62
+\minted@bgbox=\box64
 \minted@code=\write4
-\c@minted@FancyVerbLineTemp=\count314
-\c@minted@pygmentizecounter=\count315
-\@float@every@listing=\toks29
-\c@listing=\count316
+\c@minted@FancyVerbLineTemp=\count315
+\c@minted@pygmentizecounter=\count316
+\@float@every@listing=\toks31
+\c@listing=\count317
 )
 runsystem(if not exist .\\_minted-main mkdir .\\_minted-main)...executed.
 
@@ -433,18 +454,18 @@ Package: geometry 2020/01/02 v5.9 Page Geometry
 (C:\Program Files\MiKTeX\tex/generic/iftex\ifvtex.sty
 Package: ifvtex 2019/10/25 v1.7 ifvtex legacy package. Use iftex instead.
 )
-\Gm@cnth=\count317
-\Gm@cntv=\count318
-\c@Gm@tempcnt=\count319
-\Gm@bindingoffset=\dimen174
-\Gm@wd@mp=\dimen175
-\Gm@odd@mp=\dimen176
-\Gm@even@mp=\dimen177
-\Gm@layoutwidth=\dimen178
-\Gm@layoutheight=\dimen179
-\Gm@layouthoffset=\dimen180
-\Gm@layoutvoffset=\dimen181
-\Gm@dimlist=\toks30
+\Gm@cnth=\count318
+\Gm@cntv=\count319
+\c@Gm@tempcnt=\count320
+\Gm@bindingoffset=\dimen181
+\Gm@wd@mp=\dimen182
+\Gm@odd@mp=\dimen183
+\Gm@even@mp=\dimen184
+\Gm@layoutwidth=\dimen185
+\Gm@layoutheight=\dimen186
+\Gm@layouthoffset=\dimen187
+\Gm@layoutvoffset=\dimen188
+\Gm@dimlist=\toks32
 
 (C:\Program Files\MiKTeX\tex/latex/geometry\geometry.cfg))
 (C:\Program Files\MiKTeX\tex/latex/xcolor\xcolor.sty
@@ -474,43 +495,43 @@ runsystem(del main.aex)...executed.
 
 (C:\Program Files\MiKTeX\tex/latex/l3backend\l3backend-pdftex.def
 File: l3backend-pdftex.def 2023-04-19 L3 backend support: PDF output (pdfTeX)
-\l__color_backend_stack_int=\count320
-\l__pdf_internal_box=\box63
+\l__color_backend_stack_int=\count321
+\l__pdf_internal_box=\box65
 ) (main.aux)
 \openout1 = `main.aux'.
 
-LaTeX Font Info:    Checking defaults for OML/cmm/m/it on input line 18.
-LaTeX Font Info:    ... okay on input line 18.
-LaTeX Font Info:    Checking defaults for OMS/cmsy/m/n on input line 18.
-LaTeX Font Info:    ... okay on input line 18.
-LaTeX Font Info:    Checking defaults for OT1/cmr/m/n on input line 18.
-LaTeX Font Info:    ... okay on input line 18.
-LaTeX Font Info:    Checking defaults for T1/cmr/m/n on input line 18.
-LaTeX Font Info:    ... okay on input line 18.
-LaTeX Font Info:    Checking defaults for TS1/cmr/m/n on input line 18.
-LaTeX Font Info:    ... okay on input line 18.
-LaTeX Font Info:    Checking defaults for OMX/cmex/m/n on input line 18.
-LaTeX Font Info:    ... okay on input line 18.
-LaTeX Font Info:    Checking defaults for U/cmr/m/n on input line 18.
-LaTeX Font Info:    ... okay on input line 18.
-LaTeX Font Info:    Checking defaults for PD1/pdf/m/n on input line 18.
-LaTeX Font Info:    ... okay on input line 18.
-LaTeX Font Info:    Checking defaults for PU/pdf/m/n on input line 18.
-LaTeX Font Info:    ... okay on input line 18.
+LaTeX Font Info:    Checking defaults for OML/cmm/m/it on input line 19.
+LaTeX Font Info:    ... okay on input line 19.
+LaTeX Font Info:    Checking defaults for OMS/cmsy/m/n on input line 19.
+LaTeX Font Info:    ... okay on input line 19.
+LaTeX Font Info:    Checking defaults for OT1/cmr/m/n on input line 19.
+LaTeX Font Info:    ... okay on input line 19.
+LaTeX Font Info:    Checking defaults for T1/cmr/m/n on input line 19.
+LaTeX Font Info:    ... okay on input line 19.
+LaTeX Font Info:    Checking defaults for TS1/cmr/m/n on input line 19.
+LaTeX Font Info:    ... okay on input line 19.
+LaTeX Font Info:    Checking defaults for OMX/cmex/m/n on input line 19.
+LaTeX Font Info:    ... okay on input line 19.
+LaTeX Font Info:    Checking defaults for U/cmr/m/n on input line 19.
+LaTeX Font Info:    ... okay on input line 19.
+LaTeX Font Info:    Checking defaults for PD1/pdf/m/n on input line 19.
+LaTeX Font Info:    ... okay on input line 19.
+LaTeX Font Info:    Checking defaults for PU/pdf/m/n on input line 19.
+LaTeX Font Info:    ... okay on input line 19.
 
 (C:\Program Files\MiKTeX\tex/context/base/mkii\supp-pdf.mkii
 [Loading MPS to PDF converter (version 2006.09.02).]
-\scratchcounter=\count321
-\scratchdimen=\dimen182
-\scratchbox=\box64
-\nofMPsegments=\count322
-\nofMParguments=\count323
-\everyMPshowfont=\toks31
-\MPscratchCnt=\count324
-\MPscratchDim=\dimen183
-\MPnumerator=\count325
-\makeMPintoPDFobject=\count326
-\everyMPtoPDFconversion=\toks32
+\scratchcounter=\count322
+\scratchdimen=\dimen189
+\scratchbox=\box66
+\nofMPsegments=\count323
+\nofMParguments=\count324
+\everyMPshowfont=\toks33
+\MPscratchCnt=\count325
+\MPscratchDim=\dimen190
+\MPnumerator=\count326
+\makeMPintoPDFobject=\count327
+\everyMPtoPDFconversion=\toks34
 ) (C:\Program Files\MiKTeX\tex/latex/epstopdf-pkg\epstopdf-base.sty
 Package: epstopdf-base 2020-01-24 v2.11 Base part for package epstopdf
 Package epstopdf-base Info: Redefining graphics rule for `.eps' on input line 4
@@ -519,7 +540,7 @@ Package epstopdf-base Info: Redefining graphics rule for `.eps' on input line 4
 (C:\Program Files\MiKTeX\tex/latex/00miktex\epstopdf-sys.cfg
 File: epstopdf-sys.cfg 2021/03/18 v2.0 Configuration of epstopdf for MiKTeX
 ))
-Package hyperref Info: Link coloring OFF on input line 18.
+Package hyperref Info: Link coloring OFF on input line 19.
  (main.out)
 (main.out)
 \@outlinefile=\write5
@@ -560,17 +581,17 @@ Package hyperref Info: Link coloring OFF on input line 18.
 * \@reversemarginfalse
 * (1in=72.27pt=25.4mm, 1cm=28.453pt)
 
-<./images/uni_logo.png, id=15, 1691.31876pt x 894.34125pt>
+<./images/uni_logo.png, id=71, 1691.31876pt x 894.34125pt>
 File: ./images/uni_logo.png Graphic file (type png)
 <use ./images/uni_logo.png>
-Package pdftex.def Info: ./images/uni_logo.png  used on input line 22.
+Package pdftex.def Info: ./images/uni_logo.png  used on input line 23.
 (pdftex.def)             Requested size: 293.4647pt x 155.1747pt.
-LaTeX Font Info:    Trying to load font information for U+msa on input line 30.
+LaTeX Font Info:    Trying to load font information for U+msa on input line 31.
 
 (C:\Program Files\MiKTeX\tex/latex/amsfonts\umsa.fd
 File: umsa.fd 2013/01/14 v3.01 AMS symbols A
 )
-LaTeX Font Info:    Trying to load font information for U+msb on input line 30.
+LaTeX Font Info:    Trying to load font information for U+msb on input line 31.
 
 
 (C:\Program Files\MiKTeX\tex/latex/amsfonts\umsb.fd
@@ -589,32 +610,45 @@ Underfull \hbox (badness 10000) in paragraph at lines 2--3
 \tf@toc=\write6
 \openout6 = `main.toc'.
 
- [3] (sections/introduction.tex) (sections/conclusion.tex) [4]
-(main.aux)
+ [3] (sections/introduction.tex) (sections/scheduler.tex [4]
+<./images/scheduler.png, id=126, 962.84718pt x 336.50719pt>
+File: ./images/scheduler.png Graphic file (type png)
+<use ./images/scheduler.png>
+Package pdftex.def Info: ./images/scheduler.png  used on input line 19.
+(pdftex.def)             Requested size: 489.10287pt x 170.93347pt.
+ [5 <./images/scheduler.png>]
+<./images/tcb.png, id=132, 353.82187pt x 204.01219pt>
+File: ./images/tcb.png Graphic file (type png)
+<use ./images/tcb.png>
+Package pdftex.def Info: ./images/tcb.png  used on input line 26.
+(pdftex.def)             Requested size: 244.55144pt x 141.00826pt.
 
-Package rerunfilecheck Warning: File `main.out' has changed.
-(rerunfilecheck)                Rerun to get outlines right
-(rerunfilecheck)                or use package `bookmark'.
+Underfull \hbox (badness 10000) in alignment at lines 49--49
+[][] 
+ []
 
-Package rerunfilecheck Info: Checksums for `main.out':
-(rerunfilecheck)             Before: CBF0EB82800DD0092BBE0819F8EA2C3B;327
-(rerunfilecheck)             After:  46F4502391A2E7B61DA71C1E57C800CB;775.
+) (sections/sleeping.tex [6 <./images/tcb.png>]) (sections/mutex.tex)
+(sections/mutex_priority_inheritance.tex) (sections/wait_notify.tex)
+(sections/memory_pool.tex) (sections/task_communication.tex)
+(sections/demonstration.tex) (sections/conclusion.tex) [7] (main.aux)
+Package rerunfilecheck Info: File `main.out' has not changed.
+(rerunfilecheck)             Checksum: 1232EEB900B09649E8E199954C47D4A9;2773.
  ) 
 Here is how much of TeX's memory you used:
- 14213 strings out of 476372
- 239299 string characters out of 5797557
+ 14476 strings out of 476372
+ 244644 string characters out of 5797556
  1863845 words of memory out of 5000000
- 34356 multiletter control sequences out of 15000+600000
- 517040 words of font info for 50 fonts, out of 8000000 for 9000
+ 34568 multiletter control sequences out of 15000+600000
+ 521387 words of font info for 67 fonts, out of 8000000 for 9000
  1141 hyphenation exceptions out of 8191
- 77i,6n,76p,688b,578s stack positions out of 10000i,1000n,20000p,200000b,200000s
+ 77i,8n,76p,746b,578s stack positions out of 10000i,1000n,20000p,200000b,200000s
 <C:/Program Files/MiKTeX/fonts/type1/public/amsfonts/cm/cmbx12.pfb><C:/Progra
 m Files/MiKTeX/fonts/type1/public/amsfonts/cm/cmr12.pfb><C:/Program Files/MiKTe
 X/fonts/type1/public/amsfonts/cm/cmr17.pfb><C:/Program Files/MiKTeX/fonts/type1
 /public/cm-super/sfrm1200.pfb>
-Output written on main.pdf (4 pages, 187980 bytes).
+Output written on main.pdf (7 pages, 285021 bytes).
 PDF statistics:
- 85 PDF objects out of 1000 (max. 8388607)
- 25 named destinations out of 1000 (max. 500000)
- 30 words of extra memory for PDF output out of 10000 (max. 10000000)
+ 174 PDF objects out of 1000 (max. 8388607)
+ 39 named destinations out of 1000 (max. 500000)
+ 152 words of extra memory for PDF output out of 10000 (max. 10000000)
 

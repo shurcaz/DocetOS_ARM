@@ -1,5 +1,5 @@
 \section{Executive Summary}
-This report outlines several significant enhancements to the operation of the DocetOS embedded operating system, aimed at expanding the toolset available to users while maintaining robustness and compatibility with low-performance systems. The focus of these modifications is the implementation of fixed-priority scheduling, mutual exclusivity through the integration of a re-entrant mutex, and task management systems such as sleeping and inter-task communications. \hfill\break
+This report outlines several significant enhancements to the operation of the DocetOS embedded operating system, aimed at expanding the toolset available to users while maintaining robustness and compatibility with low-performance systems. The focus of these modifications is the implementation of fixed-priority scheduling, mutual exclusivity through the integration of a re-entrant mutex, and task management systems such as sleeping and inter-task communications.\hfill\break
 
 \setenumerate{noitemsep}
 \setitemize{nosep}
@@ -25,13 +25,13 @@ This report outlines several significant enhancements to the operation of the Do
 	
 	\item Mutex Priority Inheritance
 	\begin{itemize}
-		\item Integration of priority inheritance of tasks owning a mutex with a higher priority task in the mutex wait list
+		\item Integration of priority inheritance of tasks owning a mutex with a higher priority task in the mutex waiting list
 		\item Prevents priority inversion issues and streamlines the execution of critical tasks
 	\end{itemize}
 	
 	\item Wait and Notify System
 	\begin{itemize}
-		\item Overhaul of the system managing wait and notification of tasks by splitting the centralised wait list into individual sorted wait-lists per blocking item.
+		\item Overhaul of the system managing waiting and notification of tasks by splitting the centralised waiting list into individual sorted waiting lists per blocking item.
 		\item Enhances speed of task verification and notification
 	\end{itemize}
 	

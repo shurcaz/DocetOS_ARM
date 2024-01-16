@@ -3,4 +3,15 @@
 \contentsline {subsection}{\numberline {2.1}DocetOS}{4}{subsection.2.1}%
 \contentsline {subsection}{\numberline {2.2}Objectives of Modifications}{4}{subsection.2.2}%
 \contentsline {subsection}{\numberline {2.3}Structure of Report}{4}{subsection.2.3}%
-\contentsline {section}{\numberline {3}Conclusion}{4}{section.3}%
+\contentsline {section}{\numberline {3}Fixed-Priority Scheduler}{4}{section.3}%
+\contentsline {subsection}{\numberline {3.1}Purpose}{4}{subsection.3.1}%
+\contentsline {subsection}{\numberline {3.2}Specification and Design Considerations}{5}{subsection.3.2}%
+\contentsline {subsubsection}{\numberline {3.2.1}Task Priority}{5}{subsubsection.3.2.1}%
+\contentsline {subsubsection}{\numberline {3.2.2}Pre-emption}{5}{subsubsection.3.2.2}%
+\contentsline {subsubsection}{\numberline {3.2.3}Task Synchronisation}{5}{subsubsection.3.2.3}%
+\contentsline {subsection}{\numberline {3.3}Implemented Design and Functionality}{5}{subsection.3.3}%
+\contentsline {subsubsection}{\numberline {3.3.1}Scheduler Data Structure}{5}{subsubsection.3.3.1}%
+\contentsline {subsubsection}{\numberline {3.3.2}Scheduler Initialisation}{6}{subsubsection.3.3.2}%
+\contentsline {subsubsection}{\numberline {3.3.3}Context Switching}{6}{subsubsection.3.3.3}%
+\contentsline {subsubsection}{\numberline {3.3.4}Task Control Block (TCB) Management}{6}{subsubsection.3.3.4}%
+\contentsline {section}{\numberline {4}Conclusion}{7}{section.4}%
