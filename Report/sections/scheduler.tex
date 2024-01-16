@@ -18,7 +18,7 @@ To aid task synchronisation mechanisms within the system such as semaphores and 
 \begin{center}
 	\includegraphics[width=1\textwidth]{scheduler.png}
 \end{center}
-In adapting the initial round-robin structure to support fixed-priority scheduling, we replicate the round-robin for each priority level, akin to a bucket queue. This allows indexing priority levels with a time complexity of O(1) instead of linearly searching for specific priorities an a regular ordered queue. Traditionally, a bucket queue includes a pointer to the highest-priority level with a task. However, this approach necessitates a linear search through the priority levels array when extracting the highest-priority task, to find the next highest-priority level containing a task. \hfill\newline
+In adapting the initial round-robin structure to support fixed-priority scheduling, we replicate the round-robin for each priority level, akin to a bucket queue. This allows indexing priority levels with a time complexity of O(1) instead of linearly searching for specific priorities in a regular ordered queue. Traditionally, a bucket queue includes a pointer to the highest-priority level with a task. However, this approach necessitates a linear search through the priority levels array when extracting the highest-priority task, to find the next highest-priority level containing a task. \hfill\newline
 To enhance efficiency and eliminate the need for this search, we employ a binary min-heap. The min-heap tracks priority levels in the scheduler that contain tasks. Upon removing the highest-priority task, instead of searching the priority list, we identify the next highest priority level by extracting the root of the min-heap.
 
 \subsubsection{Scheduler Initialisation}

@@ -8,6 +8,7 @@
 \usepackage{hyperref}
 \usepackage{ragged2e}
 \usepackage{tabularx}
+\usepackage{wrapfig}
 \usepackage[outputdir=./]{minted}
 \usepackage[margin=0.75in]{geometry}
 
@@ -37,15 +38,19 @@
 \input{sections/executive_summary}
 \pagebreak
 
-\tableofcontents
+{
+	\renewcommand{\baselinestretch}{0.75}\normalsize
+	\tableofcontents
+}
+
 \pagebreak
 
 \input{sections/introduction}
 \input{sections/scheduler}
+\input{sections/wait_notify}
 \input{sections/sleeping}
 \input{sections/mutex}
 \input{sections/mutex_priority_inheritance}
-\input{sections/wait_notify}
 \input{sections/memory_pool}
 \input{sections/task_communication}
 \input{sections/demonstration}
