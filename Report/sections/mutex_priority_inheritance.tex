@@ -1,0 +1,9 @@
+\section{Priority Inheritance for Mutex's}
+\subsection{Purpose}
+In scenarios where a high-priority task seeks access to a mutex held by a lower-priority task, the higher-priority task may experience prolonged wait times in the mutex waiting list. This delay, caused by the lower-priority task's ongoing execution, poses a risk to the efficient operation of the system. Hence implementing priority inheritance of the mutex owner facilitates the freeing of resources in a timely manner for higher priority tasks to utilise.
+
+\subsection{Specification and Design Considerations}
+The mutex will identify when a higher-priority task is queued in the wait list. In response, the mutex dynamically elevates the priority of the current owner to match that of the waiting task. This adjustment allows the lower-priority task to release the mutex promptly, treating it with the same urgency as the waiting task. Consequently, this mechanism prevents the blocking behaviour of mutexes in a priority scheduler and ensures timely execution of high-priority tasks.
+
+\subsection{Implemented Design and Functionality}
+In our scheduler implementation, we incorporate an SVC interrupt for task priority adjustment. By regularly assessing the priority of the mutex owner in relation to the root task in the waiting list during each insert operation, as the root task holds the highest priority among waiting tasks, this process ensures that the owner task receives an elevated priority when necessary. Upon releasing the mutex, the priority of the owner task is reset to its original value established at the beginning of runtime.

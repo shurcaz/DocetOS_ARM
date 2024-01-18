@@ -1,0 +1,22 @@
+\section{Sleeping Tasks}
+\subsection{Purpose}
+In scenarios when tasks are not required to run constantly, suspending the tasks execution for a set period can aid in CPU load, power efficiency and freeing up allocated resources. A good example of this is when wanting to poll a memory location once per a second. In the current state of DocetOS the task would constantly poll the memory location with near zero delay depending on processor load. By implementing task sleeping we give tasks the ability to suspend their own execution and free up processor time for other, possibly lower priority tasks.
+
+\subsection{Specification and Design Considerations}
+\subsubsection{Operation}
+When sleeping a task, the user passes the number of system-ticks the task should sleep for into the sleep function. The task should then be removed from the scheduler for the defined number of system ticks, returning the task to the scheduler after the set period.
+
+\subsubsection{System Efficiency}
+When the system verifies the waiting list of sleeping tasks, it would be advantageous to retain an ordered queue of tasks allowing the operating system to only check if the task that will wake up soonest is ready to be returned to the scheduler, reducing verification time considerably.
+
+\subsubsection{Potential causes of error}
+During sleep function design, care must be taken to handle integer overflow of the system tick counter and calculated wake-time of tasks. Additionally, the movement of tasks to/from the scheduler must be carefully managed to retain mutual exclusivity of the scheduler.
+
+\subsection{Implemented Design and Functionality}
+\subsubsection{Sleeping Tasks}
+To  implement Task Sleeping into DocetOS, we utilise the waiting list functionality provided by the binary heap module introduced in the improved waiting/notification modification. During task insertion into the sleep waiting list through the related scheduler SVC handler, we calculate and store the task wake-time in the TCB. By providing the generic heap with a comparison function that sorts the heap by TCB wake-time, the TCB to be woken the soonest will be sorted to the heap root, so we can poll only the heap root to verify whether a task is ready to be woken and returned to the scheduler.
+
+\subsubsection{Waking Tasks}
+Each system tick, the OS polls the sleeping list to verify whether a task is ready to be woken. To maintain mutual exclusivity and simplify behaviour, this is done within the context switch. Before the context switch fetches the next task for execution, the sleeping list is verified and all tasks ready to be woken are returned to the scheduler. This ensures the timely execution of high priority woken tasks. \hfill\newline
+To handle system tick counter overflow, when comparing task wake time to the system tick counter, both values are cast to signed integers, avoiding unexpected behaviour.
+
