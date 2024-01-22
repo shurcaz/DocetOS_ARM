@@ -6,6 +6,8 @@
 ".\objects\min_heap.o"
 ".\objects\sleep.o"
 ".\objects\mutex.o"
+".\objects\mempool.o"
+".\objects\static_alloc.o"
 ".\objects\hardfault.o"
 ".\objects\utils.o"
 ".\objects\retarget_io.o"

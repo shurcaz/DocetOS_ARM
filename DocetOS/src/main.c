@@ -4,7 +4,7 @@
 #include "OS/mutex.h"
 #include <stdio.h>
 
-static void * store[MAX_TASKS];
+static void * store[MAX_TASKS] __attribute__ (( aligned(8) ));
 static heap_t wait_list = HEAP_INITIALISER(store, MAX_TASKS, OS_mutex_comparator);
 static OS_mutex_t printf_mutex = OS_MUTEX_STATIC_INITIALISER(&wait_list);
 

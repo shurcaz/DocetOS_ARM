@@ -144,7 +144,7 @@ ARM Macro Assembler    Page 3
               00000000 
 Command Line: --debug --xref --diag_suppress=9931 --cpu=Cortex-M4 --fpu=SoftVFP
  --depend=.\objects\os_asm.d -o.\objects\os_asm.o -I.\RTE\_STM32F407_Flash -IC:
-\KEIL_V5\ARM\PACK\ARM\CMSIS\5.9.0\CMSIS\Core\Include -IC:\KEIL_V5\ARM\PACK\Keil
+\KEIL_V5\ARM\PACK\ARM\CMSIS\5.8.0\CMSIS\Core\Include -IC:\KEIL_V5\ARM\PACK\Keil
 \STM32F4xx_DFP\2.15.0\Drivers\CMSIS\Device\ST\STM32F4xx\Include --predefine="__
 UVISION_VERSION SETA 535" --predefine="_RTE_ SETA 1" --predefine="STM32F407xx S
 ETA 1" --predefine="_RTE_ SETA 1" --list=.\listings\os_asm.lst src\OS\os_asm.s

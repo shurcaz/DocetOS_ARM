@@ -1,4 +1,5 @@
-#include "static_alloc.h"
+#include "OS/Alloc/static_alloc.h"
+#include "stm32f4xx.h"
 
 // 16KB pool size
 #define STATIC_ALLOC_POOLSIZE 16384UL
@@ -11,19 +12,22 @@ static size_t pool_index = STATIC_ALLOC_POOLSIZE;
 void * static_alloc(size_t bytes) {
 	// If requested bytes is available
 	if (bytes <= pool_index) {
+		size_t pool_index_tmp;
+	
 		do {
 			// Load pool index
-			size_t pool_index_tmp = (size_t) __LDREXW ((volatile uint32_t *) &(pool_index));
+			pool_index_tmp = (size_t) __LDREXW ((volatile uint32_t *) &(pool_index));
 
 			// Reduce pool index by bytes
 			pool_index_tmp -= bytes;
 		
 			// Round index to align data
 			pool_index_tmp &= ALIGNMENT_MASK;	
-		} while (__STREXW ((uint32_t) pool_index_tmp, (volatile uint32_t *) &(pool_index)))
+		} while (__STREXW ((uint32_t) pool_index_tmp, (volatile uint32_t *) &(pool_index)));
 
 		return static_pool + pool_index_tmp;
 	} else {
 		return 0;
 	}
 }
+

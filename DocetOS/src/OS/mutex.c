@@ -3,7 +3,6 @@
 #include "OS/os.h"
 #include "stm32f4xx.h"
 
-
 /* comparison function and initialisation of sleep list heap */
 inline int_fast8_t OS_mutex_comparator(void * a, void * b) {
 	uint16_t priority_a = (*((OS_TCB_t * *) a))->current_priority;
