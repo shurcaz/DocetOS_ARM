@@ -9,11 +9,13 @@
 \usepackage{ragged2e}
 \usepackage{tabularx}
 \usepackage{wrapfig}
+\usepackage[backend=bibtex, style=ieee]{biblatex}
 \usepackage[outputdir=./]{minted}
 \usepackage[margin=0.75in]{geometry}
+\addbibresource{references.bib}
 
 \title{ELE00138M\\Systems Programming for ARM Assessment}
-\author{Y3884541}
+%\author{Y3884541}
 
 \graphicspath{{./images/}}
 
@@ -52,9 +54,11 @@
 \input{sections/mutex}
 \input{sections/mutex_priority_inheritance}
 \input{sections/memory_pool}
-\input{sections/task_communication}
 \input{sections/demonstration}
 \input{sections/conclusion}
+
+\section{References}
+\printbibliography[heading=none]
 
 
 \end{document}

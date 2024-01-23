@@ -25,13 +25,14 @@ To enhance efficiency and eliminate the need for this search, we employ a binary
 \begin{center}
 	\includegraphics[width=0.5\textwidth]{tcb.png}
 \end{center}
-Before initiating the operating system, the scheduler is preloaded with all tasks to be executed by the user, up to a maximum task limit defined within the scheduler head file. Tasks are added to TCBs which are initialised with a fixed priority that remains constant throughout runtime, with the exception of when influenced by mutex priority inheritance. The priority of the TCB is constrained within the range defined by the number of priority levels specified by the OS.\hfill\newline
+Before initiating the operating system, the scheduler is preloaded with all tasks to be executed by the user, up to a maximum task limit defined within the scheduler header file. Tasks are added to Task Control Blocks (TCBs) which are initialised with a fixed priority that remains constant throughout runtime, with the exception of when influenced by mutex priority inheritance. The priority of the TCB is constrained within the range defined by the number of priority levels specified by the OS.\hfill\newline
 TCB priority is represented by an unsigned integer, with zero indicating the highest priority. Priority decreases as the integer value increases, up to the defined limit of priority levels. This design allows assigning a priority of zero to system-critical tasks, ensuring they always hold the highest priority. Increasing the number of priority levels does not then require adjusting the priority of these critical tasks since, at priority zero, they consistently remain at the highest priority, regardless of the total number of priority levels. 
-
+ 
 \subsubsection{Context Switching}
 In the context switch process, several safety checks facilitate the smooth operation and transition between tasks. Firstly, any priority levels devoid of tasks are pruned from the scheduler heap to prevent repetitive polling of the priority level to verify it is empty. Subsequently, the highest priority level containing tasks is retrieved from the heap using a peek operation.\hfill\newline
-To conclude the context switch, the head of the highest priority level is incremented, introducing round-robin behaviour within the priority level if multiple tasks exist at the level, and the new head is returned for execution.
+To conclude the context switch, the head of the highest priority level is incremented, introducing round-robin behaviour within the priority level if multiple tasks exist at the level, and the new head is returned for execution. 
 
+\pagebreak
 \subsubsection{Task Control Block (TCB) Management}
 The below operations are implemented to move TCBs within the scheduler:
 \setlength\tabcolsep{0pt}
@@ -48,4 +49,4 @@ The below operations are implemented to move TCBs within the scheduler:
 		\textbf{Task Priority \newline Modification:} 	& Changing a tasks priority by extracting it from the scheduler, updating the priority, and returning the task to the scheduler at the new priority level. \\
 	\end{tabularx}
 \end{center}
-The binary heap operations and the scheduler add/remove functions do not have mutual exclusivity systems in place. Due to the size of the operations, using LDREX and STREX to safeguard these operations is unsuitable however a mutex cannot be used as mutex’s themselves use these operations, creating circular dependency. Therefore, these operations are implemented as SVC handler functions. The SVC interrupt halts thread mode and shifts the processor to handler mode to conduct the TCB movement, preventing other tasks or interrupts from clashing with the TCB management functions. When the movement completes, the processor is returned to thread mode to resume system execution.
+The binary heap operations and the scheduler add/remove functions do not have mutual exclusivity systems in place. Due to the complexity of the operations, using the instructions provided by the Cortex-M for mutual exclusion, LDREX and STREX, to safeguard these operations is unsuitable. However, a mutex cannot be used as mutex’s themselves use these operations, creating circular dependency. Therefore, these operations are implemented as SVC handler functions. The SVC interrupt halts thread mode execution and shifts the processor to handler mode to conduct the TCB movement, preventing other tasks or interrupts from clashing with the TCB management functions. When the movement completes, the processor is returned to thread mode to resume system execution.

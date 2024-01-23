@@ -7,6 +7,7 @@
 #include <string.h>
 #include <inttypes.h>
 
+/* Set definition to 0 to observe priority inversion behaviour */
 #define USE_PRIORITY_INHERITANCE 1
 
 /* packet storage mutex */

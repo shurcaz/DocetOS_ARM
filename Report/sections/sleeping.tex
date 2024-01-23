@@ -1,7 +1,7 @@
 \section{Sleeping Tasks}
 \subsection{Purpose}
-In scenarios when tasks are not required to run constantly, suspending the tasks execution for a set period can aid in CPU load, power efficiency and freeing up allocated resources. A good example of this is when wanting to poll a memory location once per a second. In the current state of DocetOS the task would constantly poll the memory location with near zero delay depending on processor load. By implementing task sleeping we give tasks the ability to suspend their own execution and free up processor time for other, possibly lower priority tasks.
-
+In scenarios when tasks are not required to run constantly, suspending the tasks execution for a set period can aid in CPU load, power efficiency and freeing up allocated resources. A good example of this is when required to poll a memory location once per a second. In the current state of DocetOS the task would constantly poll the memory location with near zero delay depending on processor load. By implementing task sleeping we give tasks the ability to suspend their own execution and free up processor time for other, possibly lower priority tasks.
+\pagebreak
 \subsection{Specification and Design Considerations}
 \subsubsection{Operation}
 When sleeping a task, the user passes the number of system-ticks the task should sleep for into the sleep function. The task should then be removed from the scheduler for the defined number of system ticks, returning the task to the scheduler after the set period.

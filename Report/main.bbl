@@ -1,0 +1,45 @@
+% $ biblatex auxiliary file $
+% $ biblatex bbl format version 3.2 $
+% Do not modify the above lines!
+%
+% This is an auxiliary file used by the 'biblatex' package.
+% This file may safely be deleted. It will be recreated as
+% required.
+%
+\begingroup
+\makeatletter
+\@ifundefined{ver@biblatex.sty}
+  {\@latex@error
+     {Missing 'biblatex' package}
+     {The bibliography requires the 'biblatex' package.}
+      \aftergroup\endinput}
+  {}
+\endgroup
+
+\datalist[entry]{none/global//global/global}
+  \entry{MarsPathfinder}{article}{}
+    \name{author}{1}{}{%
+      {{hash=PRM}{%
+         family={Pathan},
+         familyi={P\bibinitperiod},
+         given={Risat\bibnamedelima Mahmud},
+         giveni={R\bibinitperiod\bibinitdelim M\bibinitperiod},
+      }}%
+    }
+    \list{publisher}{1}{%
+      {Chalmers University of Technology}%
+    }
+    \strng{namehash}{PRM1}
+    \strng{fullhash}{PRM1}
+    \field{labelnamesource}{author}
+    \field{labeltitlesource}{title}
+    \field{title}{Report for the Seminar Series on Software Failures - Mars
+  Pathfinder: Priority Inversion Problem}
+    \verb{url}
+    \verb https://www.cse.chalmers.se/~risat/Report_MarsPathFinder.pdf
+    \endverb
+    \field{year}{2024}
+    \warn{\item Invalid format of field 'month'}
+  \endentry
+\enddatalist
+\endinput

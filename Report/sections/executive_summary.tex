@@ -1,8 +1,8 @@
 \section{Executive Summary}
-This report outlines several significant enhancements to the operation of the DocetOS embedded operating system, aimed at expanding the toolset available to users while maintaining robustness and compatibility with low-performance systems. The focus of these modifications is the implementation of fixed-priority scheduling, mutual exclusivity through the integration of a re-entrant mutex, and task management systems such as sleeping and inter-task communications.\hfill\break
+This report outlines several significant enhancements to the operation of the DocetOS embedded operating system, aimed at expanding the toolset available to users while maintaining robustness and compatibility with low-performance systems. The focus of these modifications is the implementation of fixed-priority scheduling, mutual exclusivity through the integration of a re-entrant mutex, and the ability to pause the execution of tasks through sleeping.\hfill\break
 
 \setenumerate{noitemsep}
-\setitemize{nosep}
+%\setitemize{nosep}
 \noindent\textbf{Key Modifications:}
 \begin{enumerate}
 	\item Fixed-Priority Scheduling
@@ -39,12 +39,6 @@ This report outlines several significant enhancements to the operation of the Do
 	\begin{itemize}
 		\item Introduction of a memory pool allowing the reservation of memory for use during system run time
 		\item Consolidates memory management and gives the ability to define maximum system OS memory allocation at runtime
-	\end{itemize}
-	
-	\item Task Communication
-	\begin{itemize}
-		\item Integration of a queue-based task communication system, utilising a memory pool to allow the transfer of data across tasks
-		\item Introduces cooperation between tasks towards a common goal
 	\end{itemize}
 	
 \end{enumerate}
