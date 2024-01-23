@@ -38,9 +38,10 @@ void OS_mutex_acquire(OS_mutex_t * mutex) {
 			} else {
 				// If mutex owned by another tcb
 				if (cc == mutex->check_code) {
-					if (current_tcb->current_priority < mutex->owner_tcb->current_priority) {
-						_OS_SVC_MODIFY_PRIORITY((uint32_t) mutex->owner_tcb, (uint32_t) current_tcb->current_priority);
-					}
+					// Inherit higher priority if priority inheritance active					
+					if ((current_tcb->current_priority < mutex->owner_tcb->current_priority) && mutex->use_priority_inheritance) {
+						_OS_SVC_MODIFY_PRIORITY((uint32_t) mutex->owner_tcb, (uint16_t) current_tcb->current_priority);
+					}					
 					_OS_SVC_WAIT((uint32_t) mutex->wait_list);
 				}
 				continue;
@@ -57,9 +58,12 @@ void OS_mutex_release(OS_mutex_t * mutex) {
 		if (!mutex->counter) {
 			mutex->owner_tcb = 0;
 			mutex->check_code++;
+			
+			// If priority modified by inheritance, reset priority
 			if (current_tcb->current_priority != current_tcb->initial_priority) {
-				_OS_SVC_MODIFY_PRIORITY((uint32_t) current_tcb, (uint32_t) current_tcb->initial_priority);
+				_OS_SVC_MODIFY_PRIORITY((uint32_t) current_tcb, (uint16_t) current_tcb->initial_priority);
 			}
+			
 			_OS_SVC_NOTIFY((uint32_t) mutex->wait_list);
 		}
 	}

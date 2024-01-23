@@ -9,9 +9,10 @@ typedef struct s_OS_mutex_t {
 	volatile uint32_t counter;
 	heap_t * wait_list;
 	uint32_t check_code;
+	uint32_t use_priority_inheritance;
 } OS_mutex_t;
 
-#define OS_MUTEX_STATIC_INITIALISER(heap) { .owner_tcb = 0, .counter = 0, .check_code = 0, .wait_list = (heap) }
+#define OS_MUTEX_STATIC_INITIALISER(heap, inheritance_bool) { .owner_tcb = 0, .counter = 0, .check_code = 0, .wait_list = (heap), .use_priority_inheritance = (inheritance_bool) }
 
 int_fast8_t OS_mutex_comparator(void * a, void * b);
 

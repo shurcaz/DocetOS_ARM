@@ -24,7 +24,6 @@ void OS_sleep(uint32_t ticks) {
 	/* Store time to wake up task in TCB */
 	uint32_t _elapsedTicks = OS_elapsedTicks() + ticks;
 	currentTCB->data = &_elapsedTicks;
-	
 	/* send task to sleep list and trigger context switch */
 	_OS_SVC_WAIT((uint32_t) &sleep_list);
 }
