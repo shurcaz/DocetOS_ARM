@@ -21,7 +21,6 @@ typedef struct {
 
 #define HEAP_INITIALISER(store_array, cap, comparator_function) { .store = (store_array), .size = 0, .capacity = (cap), .comparator = (comparator_function) }
 
-
 /*
  *	Insert new item into a heap
  *
@@ -40,11 +39,11 @@ uint_fast8_t heap_insert(heap_t * heap, void * value);
 void * heap_extract(heap_t * heap);
 
 /*
- *  Peak the root item of the heap
+ *  Peek the root item of the heap
  *
  *  argument heap is a pointer to a heap struct
  *  returns a pointer to the root item
  */
-void * heap_peak(heap_t * heap);
+void * heap_peek(heap_t * heap);
 
 #endif /* _MIN_HEAP_H_ */

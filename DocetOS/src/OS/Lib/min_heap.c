@@ -132,12 +132,12 @@ void * heap_extract(heap_t * heap) {
 }
 
 /*
- *  Peak the root item of the heap
+ *  Peek the root item of the heap
  *
  *  argument heap is a pointer to a heap struct
  *  returns a pointer to the root item
  */
-void * heap_peak(heap_t * heap) {
+void * heap_peek(heap_t * heap) {
 	return heap->store[0];
 }
 

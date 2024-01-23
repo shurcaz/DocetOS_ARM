@@ -6,20 +6,14 @@
 #include "OS/Lib/min_heap.h"
 
 #include "stm32f4xx.h"
-
 #include <string.h>
 
-/* TODO - replace below comment */
-/* This is an implementation of an extremely simple round-robin scheduler.
-
-   A task list structure is declared.  Tasks are added to the list to create a circular buffer.
-	 When tasks finish, they are removed from the list.  When the scheduler is invoked, it simply
-	 advances the head pointer, and returns it.  If the head pointer is null, a pointer to the
-	 idle task is returned instead.
-	 
-	 The scheduler is reasonably efficient but not very flexible.  The "yield" flag is not
-	 checked, but merely cleared before a task is returned, so OS_yield() is equivalent to
-	 OS_schedule() in this implementation.
+/* This is an implementation of a fixed-priority round-robin scheduler.
+	 An array of task lists are declared and a binary min-heap to track occupied priority levels.
+	 Task lists act as circular buffers, tasks are added to the list associated with their priority.
+	 When tasks finish, they are removed from the list. When the scheduler is invoked, it simply
+	 advances the head pointer of the highest priority task list, and returns it.  If there are no tasks
+   in the scheduler, a pointer to the idle task is returned instead.
 */
 
 /* ##########################  Scheduler Initialisation  ########################## */
@@ -39,6 +33,7 @@ static inline int_fast8_t priority_comparator(void * a, void * b) {
 	return (int_fast8_t) (priority_a - priority_b);
 }
 
+/* Initialisate scheduler */
 static void * heap_store[PRIORITY_LEVELS];
 static heap_t priority_heap = HEAP_INITIALISER(heap_store, PRIORITY_LEVELS, priority_comparator);
 
@@ -103,7 +98,12 @@ static void scheduler_remove(OS_TCB_t * tcb) {
 	tcb->next->prev = tcb->prev;
 }
 
-/* Round-robin scheduler */
+/* Round-robin scheduler 
+ *  - Verifies and wakes sleeping tasks
+ *  - Empties scheduler heap of empty priority levels
+ *  - Advances head pointer of highest priority level and returns it
+ *  - If scheduler heap empty, returns idle task pointer
+ */
 OS_TCB_t const * _OS_schedule(void) {
 	/* Verify and wake any tasks that can be woken */
 	OS_TCB_t * sleepy_task;
@@ -113,17 +113,16 @@ OS_TCB_t const * _OS_schedule(void) {
 	}
 	
 	/* remove empty priority levels from scheduler heap */
-	while (_OS_FPSheduler.scheduler->size && !*((OS_TCB_t * *) heap_peak(_OS_FPSheduler.scheduler))) {
+	while (_OS_FPSheduler.scheduler->size && !*((OS_TCB_t * *) heap_peek(_OS_FPSheduler.scheduler))) {
 		/* If scheduler heap is not empty and the root priority level is zero
 			 Remove top priority level from scheduler heap */
 		heap_extract(_OS_FPSheduler.scheduler);
 	}
 	
 	/* If priority heap not empty	*/
-	// TODO - refactor below for clarity
 	if (_OS_FPSheduler.scheduler->size) {
 		/* get root item */
-		OS_TCB_t * * ptr_to_head_ptr = (OS_TCB_t * *) heap_peak(_OS_FPSheduler.scheduler);
+		OS_TCB_t * * ptr_to_head_ptr = (OS_TCB_t * *) heap_peek(_OS_FPSheduler.scheduler);
 		
 		/* increment head */
 		*ptr_to_head_ptr = (*ptr_to_head_ptr)->next;
@@ -174,7 +173,9 @@ void OS_initialiseTCB(OS_TCB_t * TCB, uint32_t * const stack, void (* const func
 	};
 }
 
-/* 'Add task' */
+/* Adds a task control block to the scheduler
+ * argument is a pointer to a task control block
+ */
 void OS_addTask(OS_TCB_t * const tcb) {
 	scheduler_add(tcb);
 }
@@ -192,6 +193,10 @@ void _OS_taskExit_delegate(void) {
 	SCB->ICSR = SCB_ICSR_PENDSVSET_Msk;
 }
 
+/* OS_WAIT SVC delegate
+ * Removes the current task from the scheduler and adds it to a waiting list
+ * argument is a stack containing a pointer to a wait list heap
+ */
 void _OS_wait_delegate(void * const stack) {
 	/* Get wait_list heap */
 	_OS_SVC_StackFrame_t * const s = (_OS_SVC_StackFrame_t * const) stack;
@@ -210,6 +215,10 @@ void _OS_wait_delegate(void * const stack) {
 	SCB->ICSR = SCB_ICSR_PENDSVSET_Msk;
 }
 
+/* OS_NOTIFY SVC delegate
+ * Removes the current task from a waiting list and adds it to the scheduler
+ * argument is a stack containing a pointer to a wait list heap
+ */
 void _OS_notify_delegate(void * const stack){
 	/* Get wait_list heap */
 	_OS_SVC_StackFrame_t * const s = (_OS_SVC_StackFrame_t * const) stack;
@@ -227,6 +236,10 @@ void _OS_notify_delegate(void * const stack){
 	SCB->ICSR = SCB_ICSR_PENDSVSET_Msk;
 }
 
+/* OS_MODIFY_PRIORITY SVC delegate
+ * Removes the current task the scheduler, modifies it's priority, and returns it
+ * argument is a stack containing a pointer to a task and a new priority value
+ */
 void _OS_modifyPriority_delegate(void * const stack){
 	/* Get new task priority */
 	_OS_SVC_StackFrame_t * const s = (_OS_SVC_StackFrame_t * const) stack;

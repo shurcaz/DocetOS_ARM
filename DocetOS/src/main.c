@@ -7,7 +7,7 @@
 #include <string.h>
 #include <inttypes.h>
 
-#define USE_PRIORITY_INHERITANCE 0
+#define USE_PRIORITY_INHERITANCE 1
 
 /* packet storage mutex */
 static void * store[MAX_TASKS] __attribute__ (( aligned(8) ));
@@ -26,11 +26,14 @@ static mempool_t pool = MEMPOOL_INITIALISER;
 static packet_t * packet_buffer[10];
 static uint16_t packet_count = 0;
 
+/* Populate pack data field associated string */
 static void populate_packet_data(packet_t * p) {
 	char * strings[10] = {"first", "second", "third", "fourth", "fifth", "sixth", "seventh", "eigth", "ninth", "tenth"};
 	strncpy(p->data, strings[p->id], 10);
 }
 
+/* Empty data buffer and print values,
+ * returns packet memory to the memory pool */
 static void empty_buffer(void) {
 	printf("SENDING DATA TO EARTH\r\n");
 	for (uint_fast8_t i = 0; i < 10; ++i) {
@@ -40,12 +43,14 @@ static void empty_buffer(void) {
 }
 
 /* LOW PRIORITY TASK */
+/* Creates data packets */
 __attribute__ (( noreturn ))
 static void task1(void const *const args) {
 	(void) args; // Suppress unused variable warning
 	while (1) {
 		// Fill 10 values
 		OS_mutex_acquire(&data_store_mutex);
+		printf("\nBEGIN DATA COLLECTION\r\n");
 		for (uint_fast8_t j = 0; j < 10; ++j) {
 			// fill value
 			printf("Collecting Science Data Packet ID: %d\r\n", j);
@@ -64,21 +69,23 @@ static void task1(void const *const args) {
 }
 
 /* MEDIUM PRIORITY TASK */
+/* Simulation of misc background task */
 __attribute__ (( noreturn ))
 static void task2(void const * const args) {
 	(void) args; // Suppress unused variable warning
 	while(1) {
 		OS_sleep(5);
-		for (uint_fast8_t j = 0; j < 10; ++j) {
-			//printf("\n.");
-			
-			// Simulate execution time
-			for (uint_fast32_t i = 0; i < 1000000; ++i) {}
-		}
+		
+		// Simulate execution time
+		for (uint_fast32_t i = 0; i < 10000000; ++i) {}
 	}
 }
 
 /* HIGH PRIORITY TASK */
+/* 
+ * Polls data buffer regularly to check if full,
+ * if full, empties buffer and prints values
+ */
 __attribute__ (( noreturn ))
 static void task3(void const *const args) {
 	(void) args; // Suppress unused variable warning

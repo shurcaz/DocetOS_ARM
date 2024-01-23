@@ -44,7 +44,7 @@ OS_TCB_t * _OS_verifySleepList(void) {
 	}
 	
 	/* get root task in sleep list */
-	OS_TCB_t * root_task = heap_peak(&sleep_list);
+	OS_TCB_t * root_task = heap_peek(&sleep_list);
 	
 	/* tick times are cast to signed to handle system tick overflow */
 	int32_t wake_time = *(int32_t*) (root_task->data);

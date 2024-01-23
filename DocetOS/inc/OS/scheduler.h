@@ -57,6 +57,9 @@ typedef struct s_OS_TCB_t {
 */
 void OS_initialiseTCB(OS_TCB_t * TCB, uint32_t * const stack, void (* const func)(void const * const), void const * const data, uint16_t priority);
 
+/* Adds a task control block to the scheduler
+ * argument is a pointer to a task control block
+ */
 void OS_addTask(OS_TCB_t * const tcb);
 
 /*========================*/
@@ -65,6 +68,7 @@ void OS_addTask(OS_TCB_t * const tcb);
 
 #ifdef OS_INTERNAL
 
+/* Context Switch */
 OS_TCB_t const * _OS_schedule(void);
 
 /* Fixed Priority Scheduler Structure */

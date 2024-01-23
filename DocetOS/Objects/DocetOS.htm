@@ -3,7 +3,7 @@
 <title>Static Call Graph - [.\Objects\DocetOS.axf]</title></head>
 <body><HR>
 <H1>Static Call Graph for image .\Objects\DocetOS.axf</H1><HR>
-<BR><P>#&#060CALLGRAPH&#062# ARM Linker, 6160001: Last Updated: Tue Jan 23 04:05:00 2024
+<BR><P>#&#060CALLGRAPH&#062# ARM Linker, 6160001: Last Updated: Tue Jan 23 04:57:05 2024
 <BR><P>
 <H3>Maximum Stack Usage =        324 bytes + Unknown(Functions without stacksize, Cycles, Untraceable Function Pointers)</H3><H3>
 Call chain for Maximum Stack Depth:</H3>
@@ -1555,7 +1555,7 @@ Global Symbols
 <P><STRONG><a name="[104]"></a>_OS_schedule</STRONG> (Thumb, 176 bytes, Stack size 24 bytes, scheduler.o(.text._OS_schedule))
 <BR><BR>[Stack]<UL><LI>Max Depth = 116<LI>Call Chain = _OS_schedule &rArr; _OS_verifySleepList &rArr; heap_extract &rArr; heap_down &rArr; swap
 </UL>
-<BR>[Calls]<UL><LI><a href="#[106]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;heap_peak
+<BR>[Calls]<UL><LI><a href="#[106]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;heap_peek
 <LI><a href="#[103]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;heap_extract
 <LI><a href="#[105]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;_OS_verifySleepList
 <LI><a href="#[f3]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;scheduler_add
@@ -1585,7 +1585,7 @@ Global Symbols
 <BR><BR>[Stack]<UL><LI>Max Depth = 92<LI>Call Chain = _OS_verifySleepList &rArr; heap_extract &rArr; heap_down &rArr; swap
 </UL>
 <BR>[Calls]<UL><LI><a href="#[fb]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;OS_elapsedTicks
-<LI><a href="#[106]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;heap_peak
+<LI><a href="#[106]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;heap_peek
 <LI><a href="#[103]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;heap_extract
 </UL>
 <BR>[Called By]<UL><LI><a href="#[104]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;_OS_schedule
@@ -1693,8 +1693,8 @@ Global Symbols
 <LI><a href="#[f3]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;scheduler_add
 </UL>
 
-<P><STRONG><a name="[106]"></a>heap_peak</STRONG> (Thumb, 14 bytes, Stack size 4 bytes, min_heap.o(.text.heap_peak))
-<BR><BR>[Stack]<UL><LI>Max Depth = 4<LI>Call Chain = heap_peak
+<P><STRONG><a name="[106]"></a>heap_peek</STRONG> (Thumb, 14 bytes, Stack size 4 bytes, min_heap.o(.text.heap_peek))
+<BR><BR>[Stack]<UL><LI>Max Depth = 4<LI>Call Chain = heap_peek
 </UL>
 <BR>[Called By]<UL><LI><a href="#[105]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;_OS_verifySleepList
 <LI><a href="#[104]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;_OS_schedule
@@ -1728,7 +1728,7 @@ Global Symbols
 <LI><a href="#[10d]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;empty_buffer
 </UL>
 
-<P><STRONG><a name="[113]"></a>pool_init</STRONG> (Thumb, 76 bytes, Stack size 32 bytes, mempool.o(.text.pool_init))
+<P><STRONG><a name="[113]"></a>pool_init</STRONG> (Thumb, 68 bytes, Stack size 32 bytes, mempool.o(.text.pool_init))
 <BR><BR>[Stack]<UL><LI>Max Depth = 48<LI>Call Chain = pool_init &rArr; pool_deallocate
 </UL>
 <BR>[Calls]<UL><LI><a href="#[114]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;static_alloc
@@ -1903,7 +1903,7 @@ Local Symbols
 <BR>[Called By]<UL><LI><a href="#[61]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;task1
 </UL>
 
-<P><STRONG><a name="[61]"></a>task1</STRONG> (Thumb, 160 bytes, Stack size 16 bytes, main.o(.text.task1))
+<P><STRONG><a name="[61]"></a>task1</STRONG> (Thumb, 172 bytes, Stack size 16 bytes, main.o(.text.task1))
 <BR><BR>[Stack]<UL><LI>Max Depth = 160 + Unknown Stack Size
 <LI>Call Chain = task1 &rArr; printf &rArr; _printf_char_file &rArr; _printf_char_common &rArr; __printf
 </UL>
@@ -1916,8 +1916,8 @@ Local Symbols
 </UL>
 <BR>[Address Reference Count : 1]<UL><LI> main.o(.text.main)
 </UL>
-<P><STRONG><a name="[62]"></a>task2</STRONG> (Thumb, 70 bytes, Stack size 16 bytes, main.o(.text.task2))
-<BR><BR>[Stack]<UL><LI>Max Depth = 64<LI>Call Chain = task2 &rArr; OS_sleep &rArr; _svc_1
+<P><STRONG><a name="[62]"></a>task2</STRONG> (Thumb, 46 bytes, Stack size 8 bytes, main.o(.text.task2))
+<BR><BR>[Stack]<UL><LI>Max Depth = 56<LI>Call Chain = task2 &rArr; OS_sleep &rArr; _svc_1
 </UL>
 <BR>[Calls]<UL><LI><a href="#[fa]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;OS_sleep
 </UL>
